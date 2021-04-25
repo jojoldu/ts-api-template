@@ -1,0 +1,108 @@
+# Typescript로 HTTP API 만들기
+
+## 1. Typeorm 
+
+먼저 typeorm CLI를 설치합니다.
+
+```bash
+npm install typeorm -g
+```
+
+설치된 CLI를 통해 Typeorm 기반의 보일러플레이트 프로젝트를 생성할 것인데요.  
+아래 명령어로 수행합니다.
+
+```bash
+typeorm init --name ts-api-template --database pg
+```
+
+* `--database pg`
+  * 사용할 데이터베이스의 드라이버를 설치합니다.
+  * 여기서는 PostgreSQL을 사용할 예정이니 `pg` 를 등록합니다.  
+
+그럼 아래와 같은 메세지와 함께 보일러플레이트가 생성됩니다.
+
+```bash
+Project created inside ..../ts-api-template directory.
+```
+
+기본 골격은 다음과 같습니다.
+
+```bash
+ts-api-template
+├── src              // TypeScript code
+│   ├── entity       // Entity 디렉토리
+│   │   └── User.ts  // 샘플 Entity
+│   ├── migration    // place where your migrations are stored
+│   └── index.ts     // start point
+├── .gitignore       
+├── ormconfig.json   // ORM and database connection configuration
+├── package.json     
+├── README.md        
+└── tsconfig.json    // TypeScript compiler options
+```
+
+추가 패키지 설치전에, 로컬 DB로 사용할 PostgreSQL의 접속 정보를 `ormconfig.json` 에 등록합니다.  
+
+> 저는 Docker로 설치해서 사용하지만, 직접 로컬 설치하셔도 무방합니다.  
+> 단순 로컬 실행 외에 테스트 코드는 [testcontainers-node](https://www.npmjs.com/package/testcontainers) 를 사용할 예정입니다.
+
+만약 저와 같이 Docker로 설치하실 분들이라면 아래의 명령어로 실행하시면 됩니다.
+
+```bash
+docker run --rm \
+    --name local-db \
+    -e POSTGRES_DB=test \
+    -e POSTGRES_USER=test \
+    -e POSTGRES_PASSWORD=test \
+    -p 5432:5432 \
+    postgres
+```
+
+그리고 여기서 사용한 접속 정보를 `ormconfig.json` 에 등록합니다.
+
+```js
+{
+   "type": "postgres",
+   "host": "localhost",
+   "port": 5432,
+   "username": "test",
+   "password": "test",
+   "database": "test",
+   "synchronize": true,
+   "logging": false,
+   "entities": [
+      "src/entity/**/*.ts"
+   ],
+   "migrations": [
+      "src/migration/**/*.ts"
+   ],
+   "subscribers": [
+      "src/subscriber/**/*.ts"
+   ],
+   "cli": {
+      "entitiesDir": "src/entity",
+      "migrationsDir": "src/migration",
+      "subscribersDir": "src/subscriber"
+   }
+}
+```
+
+그럼 이제 `package.json`의 나머지 패키지들 설치를 위해 `npm install`을 수행합니다.
+
+```bash
+npm install
+```
+
+그리고 `npm start`를 수행합니다.
+
+```bash
+npm start
+```
+
+물론 WebStorm과 같이 IDE를 사용하신다면 굳이 Command를 사용하지 않고, **디버깅을 위해** IDE 디버그 모드로 수행하는 것도 좋습니다.
+
+그럼 Typeorm의 Entity에 맞게 테이블이 자동으로 생성된 것을 Gui 도구를 통해 확인할 수 있습니다.
+
+![gui](./images/gui.png)
+
+> 저는 JetBrains사의 [DataGrip](https://www.jetbrains.com/ko-kr/datagrip/)을 사용합니다.
