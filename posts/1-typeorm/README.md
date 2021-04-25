@@ -1,8 +1,10 @@
-# Typescript로 HTTP API 만들기
+# 혼자서 Typescript로 HTTP API 만들기
 
-## 1. Typeorm 
+## 1. TypeORM 
 
-먼저 typeorm CLI를 설치합니다.
+### 1-1. TypeORM 설치하기
+
+먼저 TypeORM CLI를 설치합니다.
 
 ```bash
 npm install typeorm -g
@@ -58,6 +60,13 @@ docker run --rm \
     postgres
 ```
 
+저처럼 Docker로 설치하신 분들이 아니시라면, 아래와 같은 접속 정보로 로컬 PostgreSQL을 설정하시면 됩니다.
+
+* Database: `test`
+* User: `test`
+* Password: `test`
+* Port: `5432`
+
 그리고 여기서 사용한 접속 정보를 `ormconfig.json` 에 등록합니다.
 
 ```js
@@ -106,3 +115,6 @@ npm start
 ![gui](./images/gui.png)
 
 > 저는 JetBrains사의 [DataGrip](https://www.jetbrains.com/ko-kr/datagrip/)을 사용합니다.
+
+### 1-2. 게시글 Entity 만들기
+
