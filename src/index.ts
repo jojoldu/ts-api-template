@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import {createConnection} from "typeorm";
 import {User} from "./entity/User";
+import {Article} from "./entity/article/Article";
 
 createConnection().then(async connection => {
 
@@ -17,5 +18,12 @@ createConnection().then(async connection => {
     console.log("Loaded users: ", users);
 
     console.log("Here you can setup and run express/koa/any other framework.");
+    const now = new Date();
+    const article = Article.createContent(now, '테스트', '테스트데이터', 'jojoldu');
+
+    let articleRepository = connection.getRepository(Article);
+    await articleRepository.save(article);
+    let savedArticles = await articleRepository.find();
+    console.log("All articles from the db: ", savedArticles);
 
 }).catch(error => console.log(error));
