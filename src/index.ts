@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import {createConnection, getConnection} from "typeorm";
-import {User} from "./entity/User";
+import {User} from "./entity/user/User";
 import {Article} from "./entity/article/Article";
 
 createConnection().then(async connection => {

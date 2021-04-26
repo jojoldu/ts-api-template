@@ -118,3 +118,89 @@ npm start
 
 ### 1-2. 게시글 Entity 만들기
 
+**Active Record**
+
+```js
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
+
+@Entity()
+export class User extends BaseEntity {
+
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @Column()
+    firstName: string;
+
+    @Column()
+    lastName: string;
+
+    @Column()
+    age: number;
+
+}
+```
+
+```js
+const user = new User();
+user.firstName = "Timber";
+user.lastName = "Saw";
+user.age = 25;
+await user.save();
+
+const allUsers = await User.find();
+const firstUser = await User.findOne(1);
+const timber = await User.findOne({ firstName: "Timber", lastName: "Saw" });
+
+await timber.remove();
+```
+
+**Data Mapper**
+
+```js
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+
+@Entity()
+export class User {
+
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @Column()
+    firstName: string;
+
+    @Column()
+    lastName: string;
+
+    @Column()
+    age: number;
+
+}
+```
+
+```js
+const repository = connection.getRepository(User);
+
+const user = new User();
+user.firstName = "Timber";
+user.lastName = "Saw";
+user.age = 25;
+await repository.save(user);
+
+const allUsers = await repository.find();
+const firstUser = await repository.findOne(1); // find by id
+const timber = await repository.findOne({ firstName: "Timber", lastName: "Saw" });
+
+await repository.remove(timber);
+```
+
+[TypeORM 공식 문서](https://typeorm.io/#/active-record-data-mapper/which-one-should-i-choose)에서는 둘 간의 차이를 아래와 같이 설명하고 추천합니다.
+
+* Active Record
+  * 모델 내에서 데이터베이스에 액세스하는 접근 방식
+  * 규모가 작은 애플리케이션에서 적합하고, 단순하게 사용 가능
+* Data Mapper
+  * `Repository` 라는 별도의 클래스에 모든 쿼리 메서드를 정의하고 `Repository` 를 사용하여 개체를 저장, 제거, 로드 
+  * 규모가 큰 애플리케이션에 적합하고 유지보수하는데 효과적
+
+> JPA를 사용해보신 분들이라면 Data Mapper 방식이 JPA의 Entity & Repository 패턴과 비슷하여 쉽게 적응하실 수 있습니다.
