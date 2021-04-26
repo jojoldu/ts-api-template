@@ -1,12 +1,10 @@
 import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {BaseTimeEntity} from "../BaseTimeEntity";
 
 @Entity()
-export class Article {
+export class Article extends BaseTimeEntity{
     @PrimaryGeneratedColumn()
     private id: number;
-
-    @Column("timestamptz")
-    private created_at: Date;
 
     @Column()
     private title: string;
@@ -23,10 +21,9 @@ export class Article {
     @Column()
     private isPublished: boolean;
 
-
-    static createContent(created_at: Date, title: string, content: string, author: string) {
+    static createContent(createdAt: Date, title: string, content: string, author: string) {
         let article = new Article();
-        article.created_at = created_at;
+        article.createdAt = createdAt;
         article.title = title;
         article.content = content;
         article.author = author;
@@ -39,8 +36,8 @@ export class Article {
         this.isPublished = true;
     }
 
-    updateContent(created_at: Date, title: string, content: string): void {
-        this.created_at = created_at;
+    updateContent(createdAt: Date, title: string, content: string): void {
+        this.createdAt = createdAt;
         this.title = title;
         this.content = content;
     }
