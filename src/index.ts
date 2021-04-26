@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import {createConnection} from "typeorm";
+import {createConnection, getConnection} from "typeorm";
 import {User} from "./entity/User";
 import {Article} from "./entity/article/Article";
 
@@ -25,5 +25,9 @@ createConnection().then(async connection => {
     await articleRepository.save(article);
     let savedArticles = await articleRepository.find();
     console.log("All articles from the db: ", savedArticles);
+    const id = 1;
+    await connection.transaction("SERIALIZABLE", async transactionalEntityManager => {
+        await transactionalEntityManager.delete(Article, {id: id})
+    });
 
 }).catch(error => console.log(error));
