@@ -1,8 +1,6 @@
-# 혼자서 Typescript로 HTTP API 만들기
+# 1. 혼자서 Typescript로 HTTP API 만들기 - 1. TypeORM
 
-## 1. TypeORM 
-
-### 1-1. TypeORM 설치하기
+## 1-1. TypeORM 설치하기
 
 먼저 TypeORM CLI를 설치합니다.
 
@@ -96,6 +94,9 @@ docker run --rm \
 }
 ```
 
+> 저의 경우엔 `ormconfig.json` 가 아닌 ``ormconfig.js` 로 변환해서 사용중입니다.  
+> [TypeORM에서 Camelcase 필드를 Snake 컬럼에 매핑하기](https://jojoldu.tistory.com/568?category=635878) 를 위해서인데, 이는 이후에 테스트 코드 작성시에 다시 언급하게됩니다.
+
 그럼 이제 `package.json`의 나머지 패키지들 설치를 위해 `npm install`을 수행합니다.
 
 ```bash
@@ -116,9 +117,12 @@ npm start
 
 > 저는 JetBrains사의 [DataGrip](https://www.jetbrains.com/ko-kr/datagrip/)을 사용합니다.
 
-### 1-2. 게시글 Entity 만들기
+## 1-2. 게시글 Entity 만들기
 
-**Active Record**
+CLI로 생성해준 User 외에 게시글 Entity를 하나 만들어보겠습니다.  
+TypeORM에서는 2가지 형태의 Entity 유형을 지원하는데요.  
+
+**1. Active Record**
 
 ```js
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
@@ -155,7 +159,7 @@ const timber = await User.findOne({ firstName: "Timber", lastName: "Saw" });
 await timber.remove();
 ```
 
-**Data Mapper**
+**2. Data Mapper**
 
 ```js
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
@@ -204,3 +208,8 @@ await repository.remove(timber);
   * 규모가 큰 애플리케이션에 적합하고 유지보수하는데 효과적
 
 > JPA를 사용해보신 분들이라면 Data Mapper 방식이 JPA의 Entity & Repository 패턴과 비슷하여 쉽게 적응하실 수 있습니다.
+
+
+## 1-3. TypeORM 테스트 코드
+
+테스트 환경을 잘 지원하는 [testcontainers-node](https://github.com/testcontainers/testcontainers-node)를 사용하겠습니다.  
