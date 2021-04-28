@@ -4,41 +4,72 @@ import {BaseTimeEntity} from "../BaseTimeEntity";
 @Entity()
 export class Article extends BaseTimeEntity{
     @PrimaryGeneratedColumn()
-    private id: number;
+    private _id: number;
+
+    @Column({type:"timestamptz", nullable: true})
+    private _reservationDate: Date;
 
     @Column()
-    private title: string;
+    private _title: string;
 
     @Column("text")
-    private content: string;
+    private _content: string;
 
     @Column()
-    private author: string;
+    private _author: string;
 
     @Column()
-    private views: number;
+    private _views: number;
 
     @Column()
-    private isPublished: boolean;
+    private _isPublished: boolean;
 
-    static createContent(createdAt: Date, title: string, content: string, author: string) {
+    static createContent(reservationDate: Date, title: string, content: string, author: string) {
         let article = new Article();
-        article.createdAt = createdAt;
-        article.title = title;
-        article.content = content;
-        article.author = author;
-        article.views = 1;
-        article.isPublished = false;
+        article._reservationDate = reservationDate;
+        article._title = title;
+        article._content = content;
+        article._author = author;
+        article._views = 1;
+        article._isPublished = false;
         return article;
     }
 
     publish(): void {
-        this.isPublished = true;
+        this._isPublished = true;
     }
 
-    updateContent(createdAt: Date, title: string, content: string): void {
-        this.createdAt = createdAt;
-        this.title = title;
-        this.content = content;
+    updateContent(reservationDate: Date, title: string, content: string): void {
+        this._reservationDate = reservationDate;
+        this._title = title;
+        this._content = content;
+    }
+
+    get id(): number {
+        return this._id;
+    }
+
+    get reservationDate(): Date {
+        return this._reservationDate;
+    }
+
+    get title(): string {
+        return this._title;
+    }
+
+    get content(): string {
+        return this._content;
+    }
+
+    get author(): string {
+        return this._author;
+    }
+
+    get views(): number {
+        return this._views;
+    }
+
+    get isPublished(): boolean {
+        return this._isPublished;
     }
 }

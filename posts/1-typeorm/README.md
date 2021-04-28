@@ -1,4 +1,4 @@
-# 1. 혼자서 Typescript로 HTTP API 만들기 - 1. TypeORM
+# 1. 혼자서 Typescript로 HTTP API 만들기 - TypeORM
 
 ## 1-1. TypeORM 설치하기
 
@@ -211,5 +211,4 @@ await repository.remove(timber);
 
 
 ## 1-3. TypeORM 테스트 코드
-
-테스트 환경을 잘 지원하는 [testcontainers-node](https://github.com/testcontainers/testcontainers-node)를 사용하겠습니다.  
+ 
