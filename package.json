@@ -9,7 +9,7 @@
     "jest": "^26.6.3",
     "ts-jest": "^26.5.5",
     "ts-node": "3.3.0",
-    "typedi": "^0.10.0",
+    "typedi": "^0.8.0",
     "typescript": "3.3.3333"
   },
   "dependencies": {
@@ -20,7 +20,7 @@
     "typeorm-typedi-extensions": "^0.4.1"
   },
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "ts-node src/server.ts",
     "test": "jest",
     "test:integration": "cd test/integration && jest --maxConcurrency=1 --maxWorkers=1"
   }
