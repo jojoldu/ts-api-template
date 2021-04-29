@@ -35,7 +35,7 @@ ts-api-template
 │   ├── migration    // place where your migrations are stored
 │   └── index.ts     // start point
 ├── .gitignore       
-├── ormconfig.json   // ORM and database connection configuration
+├── ormconfig.json   // ORM and database testConnection configuration
 ├── package.json     
 ├── README.md        
 └── tsconfig.json    // TypeScript compiler options
@@ -183,7 +183,7 @@ export class User {
 ```
 
 ```js
-const repository = connection.getRepository(User);
+const repository = testConnection.getRepository(User);
 
 const user = new User();
 user.firstName = "Timber";
@@ -210,5 +210,9 @@ await repository.remove(timber);
 > JPA를 사용해보신 분들이라면 Data Mapper 방식이 JPA의 Entity & Repository 패턴과 비슷하여 쉽게 적응하실 수 있습니다.
 
 
-## 1-3. TypeORM 테스트 코드
+## 1-3. TypeORM과 의존성 주입
+
+```bash
+npm install typeorm-typedi-extensions
+```
  

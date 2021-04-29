@@ -1,4 +1,4 @@
-import {Article} from "../../../src/entity/article/Article";
+import {Article} from "../../../../src/entity/article/Article";
 
 describe('Article 기본 CRUD', () => {
     test('팩토리 메소드로 생성', () => {
