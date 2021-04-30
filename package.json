@@ -3,24 +3,22 @@
   "version": "0.0.0",
   "private": true,
   "devDependencies": {
-    "@trendyol/jest-testcontainers": "^2.1.0",
     "@types/jest": "^26.0.23",
     "@types/node": "^8.0.29",
     "jest": "^26.6.3",
     "ts-jest": "^26.5.5",
     "ts-node": "3.3.0",
-    "typedi": "^0.8.0",
     "typescript": "3.3.3333"
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
     "pg": "^8.6.0",
     "reflect-metadata": "^0.1.10",
     "typeorm": "0.2.32",
-    "typeorm-naming-strategies": "^2.0.0",
-    "typeorm-typedi-extensions": "^0.4.1"
+    "typeorm-naming-strategies": "^2.0.0"
   },
   "scripts": {
-    "start": "ts-node src/server.ts",
+    "start": "ts-node src/index.ts",
     "test": "jest",
     "test:integration": "cd test/integration && jest --maxConcurrency=1 --maxWorkers=1"
   }
