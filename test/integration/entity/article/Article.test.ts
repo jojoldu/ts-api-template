@@ -1,19 +1,6 @@
 
-import testConnection from '../../testConnection';
 import {getConnection, getRepository} from "typeorm";
 import {Article} from "../../../../src/entity/article/Article";
-
-beforeAll(async ()=>{
-    await testConnection.create();
-});
-
-afterAll(async ()=>{
-    await testConnection.close();
-});
-
-beforeEach(async () => {
-    await testConnection.clear();
-});
 
 it('creates a user', async () => {
     const now = new Date();

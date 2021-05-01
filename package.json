@@ -13,7 +13,7 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "pg": "^8.6.0",
-    "reflect-metadata": "^0.1.10",
+    "reflect-metadata": "^0.1.13",
     "typeorm": "0.2.32",
     "typeorm-naming-strategies": "^2.0.0"
   },
