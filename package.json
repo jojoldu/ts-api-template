@@ -24,6 +24,7 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "test": "jest",
-    "test:integration": "cd test/integration && jest"
+    "test:integration": "jest -c=jest.config.integration.js",
+    "generate-ddl": "typeorm migration:generate -n ddl.sql"
   }
 }

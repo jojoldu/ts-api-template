@@ -2,12 +2,28 @@ import {Column, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn} from
 
 export abstract class BaseTimeEntity {
 
-    @CreateDateColumn({type:"timestamptz"})
-    createdAt: Date;
+    @PrimaryGeneratedColumn({type: 'bigint'})
+    protected _id: number;
 
-    @UpdateDateColumn({type:"timestamptz"})
-    updatedAt: Date;
+    @CreateDateColumn({type:"timestamptz"}) private _createdAt: Date;
 
-    @Column({type:"timestamptz", nullable: true})
-    deletedAt?: Date | null;
+    @UpdateDateColumn({type:"timestamptz"}) private _updatedAt: Date;
+
+    @Column({type:"timestamptz", nullable: true}) private _deletedAt?: Date | null;
+
+    get id(): number {
+        return this._id;
+    }
+
+    get createdAt(): Date {
+        return this._createdAt;
+    }
+
+    get updatedAt(): Date {
+        return this._updatedAt;
+    }
+
+    get deletedAt(): Date | null {
+        return this._deletedAt;
+    }
 }

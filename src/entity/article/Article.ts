@@ -1,10 +1,8 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity} from "typeorm";
 import {BaseTimeEntity} from "../BaseTimeEntity";
 
 @Entity()
 export class Article extends BaseTimeEntity{
-    @PrimaryGeneratedColumn()
-    private _id: number;
 
     @Column({type:"timestamptz", nullable: true})
     private _reservationDate: Date;
@@ -12,13 +10,13 @@ export class Article extends BaseTimeEntity{
     @Column()
     private _title: string;
 
-    @Column("text")
+    @Column({type: "text"})
     private _content: string;
 
     @Column()
     private _author: string;
 
-    @Column()
+    @Column({type:'bigint'})
     private _views: number;
 
     @Column()
@@ -43,10 +41,6 @@ export class Article extends BaseTimeEntity{
         this._reservationDate = reservationDate;
         this._title = title;
         this._content = content;
-    }
-
-    get id(): number {
-        return this._id;
     }
 
     get reservationDate(): Date {

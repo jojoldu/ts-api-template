@@ -1,4 +1,4 @@
-# 1. 혼자서 Typescript로 HTTP API 만들기 - TypeORM
+# 1. Typescript로 HTTP API 만들기 - TypeORM
 
 ## 1-1. TypeORM 설치하기
 
@@ -35,7 +35,7 @@ ts-api-template
 │   ├── migration    // place where your migrations are stored
 │   └── index.ts     // start point
 ├── .gitignore       
-├── ormconfig.json   // ORM and database testConnection configuration
+├── ormconfig.json   // ORM and database connection configuration
 ├── package.json     
 ├── README.md        
 └── tsconfig.json    // TypeScript compiler options
@@ -183,7 +183,7 @@ export class User {
 ```
 
 ```js
-const repository = testConnection.getRepository(User);
+const repository = connection.getRepository(User);
 
 const user = new User();
 user.firstName = "Timber";
@@ -212,7 +212,13 @@ await repository.remove(timber);
 
 ## 1-3. TypeORM과 의존성 주입
 
+* [typeorm-typedi-extensions](https://github.com/typeorm/typeorm-typedi-extensions)
+
 ```bash
-npm install typeorm-typedi-extensions
+npm install typeorm-typedi-extensions typedi
 ```
+
+
+* https://jhyeok.com/node-backend-structure/
+* https://github.com/JHyeok/jaebook-server
  

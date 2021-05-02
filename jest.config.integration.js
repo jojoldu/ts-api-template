@@ -1,14 +1,16 @@
-const {join} = require('path');
 
 module.exports = {
-    preset: 'ts-jest',
+    moduleFileExtensions: ['js', 'json', 'ts'],
     clearMocks: true,
     maxWorkers: 1,
     maxConcurrency: 1,
+    transform: {
+        '^.+\\.(t|j)s$': 'ts-jest',
+    },
     testMatch: [
         '<rootDir>/test/integration/**/*.test.ts',
         '!<rootDir>/test/integration/testConnection.ts'
     ],
-    rootDir: join(__dirname, '../../../'),
+    rootDir: './',
     testEnvironment: 'node',
 };
