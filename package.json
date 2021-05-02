@@ -24,6 +24,6 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "test": "jest",
-    "test:integration": "cd test/integration && jest --maxConcurrency=1 --maxWorkers=1"
+    "test:integration": "cd test/integration && jest"
   }
 }
