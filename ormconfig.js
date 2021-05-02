@@ -1,28 +1,28 @@
-const SnakeNamingStrategy = require('typeorm-naming-strategies')
-    .SnakeNamingStrategy;
+const {PrivateSnakeNamingStrategy} = require("./config/PrivateSnakeNamingStrategy");
 
 module.exports = {
-    "type": "postgres",
-    "host": "localhost",
-    "port": 5432,
-    "username": "test",
-    "password": "test",
-    "database": "test",
-    "synchronize": true,
-    "logging": true,
-    "entities": [
-        '<rootDir>/src/entity/**/*.ts'
+    type: "postgres",
+    host: "localhost",
+    port: 5432,
+    username: "test",
+    password: "test",
+    database: "test",
+    synchronize: true,
+    logging: false,
+    dropSchema: true,
+    entities: [
+        "src/entity/**/*.ts"
     ],
-    "migrations": [
-        '<rootDir>/src/migration/**/*.ts'
+    migrations: [
+        'src/migration/**/*.ts'
     ],
-    "subscribers": [
-        '<rootDir>/src/subscriber/**/*.ts'
+    subscribers: [
+        'src/subscriber/**/*.ts'
     ],
-    "cli": {
+    cli: {
         "entitiesDir": "src/entity",
         "migrationsDir": "src/migration",
         "subscribersDir": "src/subscriber"
     },
-    namingStrategy: new SnakeNamingStrategy(),
+    namingStrategy: new PrivateSnakeNamingStrategy(),
 }
