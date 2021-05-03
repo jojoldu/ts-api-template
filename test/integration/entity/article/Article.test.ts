@@ -17,17 +17,7 @@ describe('Article CRUD', () => {
         await testConnection.clear();
     });
 
-    it('creates a user', async () => {
-        const now = new Date();
-        const article = Article.create(now, '테스트', '테스트데이터', 'jojoldu');
-
-        let articleRepository = getConnection().getRepository(Article);
-        await articleRepository.save(article);
-        let savedArticles = await articleRepository.find();
-        console.log("All articles from the db: ", savedArticles);
-    })
-
-    it('테스트1', async () => {
+    test('Article 생성', async () => {
         const now = new Date();
         const article = Article.create(now, '테스트', '테스트데이터', 'jojoldu');
 
@@ -36,6 +26,24 @@ describe('Article CRUD', () => {
         let savedArticles = await articleRepository.find();
         console.log("All articles from the db: ", savedArticles);
     })
+
+    test('Article publish on', async () => {
+        // given
+        const now = new Date();
+        const article = Article.create(now, '테스트', '테스트데이터', 'jojoldu');
+        let articleRepository = getRepository(Article);
+        await articleRepository.save(article);
+
+        // when
+        let savedArticle = await articleRepository.findOne({title:'테스트'});
+        savedArticle.publish();
+        await articleRepository.save(savedArticle);
+
+        // then
+        const result = await articleRepository.findOne({title:'테스트'});
+        expect(result.isPublished).toBe(true);
+    })
+
 })
 
 
