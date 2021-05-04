@@ -1,4 +1,4 @@
-import {SnakeNamingStrategy} from "typeorm-naming-strategies";
+const {SnakeNamingStrategy} = require("typeorm-naming-strategies");
 
 module.exports = {
     type: "postgres",
