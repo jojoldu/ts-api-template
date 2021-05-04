@@ -1,4 +1,4 @@
-const {PrivateSnakeNamingStrategy} = require("./config/PrivateSnakeNamingStrategy");
+import {SnakeNamingStrategy} from "typeorm-naming-strategies";
 
 module.exports = {
     type: "postgres",
@@ -24,5 +24,5 @@ module.exports = {
         "migrationsDir": "src/migration",
         "subscribersDir": "src/subscriber"
     },
-    namingStrategy: new PrivateSnakeNamingStrategy(),
+    namingStrategy: new SnakeNamingStrategy(),
 }

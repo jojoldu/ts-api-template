@@ -5,22 +5,22 @@ import {BaseTimeEntity} from "../BaseTimeEntity";
 export class Article extends BaseTimeEntity{
 
     @Column({type:"timestamptz", nullable: true})
-    public reservationDate: Date;
+    reservationDate: Date;
 
     @Column()
-    public title: string;
+    title: string;
 
     @Column({type: "text"})
-    public content: string;
+    content: string;
 
     @Column()
-    public author: string;
+    author: string;
 
     @Column({type:'bigint'})
-    public views: number;
+    views: number;
 
     @Column()
-    public isPublished: boolean;
+    isPublished: boolean;
 
     static create(reservationDate: Date, title: string, content: string, author: string) {
         let article = new Article();
