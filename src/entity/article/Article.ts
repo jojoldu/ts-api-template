@@ -5,65 +5,42 @@ import {BaseTimeEntity} from "../BaseTimeEntity";
 export class Article extends BaseTimeEntity{
 
     @Column({type:"timestamptz", nullable: true})
-    private _reservationDate: Date;
+    public reservationDate: Date;
 
     @Column()
-    private _title: string;
+    public title: string;
 
     @Column({type: "text"})
-    private _content: string;
+    public content: string;
 
     @Column()
-    private _author: string;
+    public author: string;
 
     @Column({type:'bigint'})
-    private _views: number;
+    public views: number;
 
     @Column()
-    private _isPublished: boolean;
+    public isPublished: boolean;
 
     static create(reservationDate: Date, title: string, content: string, author: string) {
         let article = new Article();
-        article._reservationDate = reservationDate;
-        article._title = title;
-        article._content = content;
-        article._author = author;
-        article._views = 1;
-        article._isPublished = false;
+        article.reservationDate = reservationDate;
+        article.title = title;
+        article.content = content;
+        article.author = author;
+        article.views = 1;
+        article.isPublished = false;
         return article;
     }
 
     publish(): void {
-        this._isPublished = true;
+        this.isPublished = true;
     }
 
     updateContent(reservationDate: Date, title: string, content: string): void {
-        this._reservationDate = reservationDate;
-        this._title = title;
-        this._content = content;
+        this.reservationDate = reservationDate;
+        this.title = title;
+        this.content = content;
     }
 
-    get reservationDate(): Date {
-        return this._reservationDate;
-    }
-
-    get title(): string {
-        return this._title;
-    }
-
-    get content(): string {
-        return this._content;
-    }
-
-    get author(): string {
-        return this._author;
-    }
-
-    get views(): number {
-        return this._views;
-    }
-
-    get isPublished(): boolean {
-        return this._isPublished;
-    }
 }
