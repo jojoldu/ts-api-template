@@ -1,8 +1,9 @@
 import {createConnection, getConnection} from 'typeorm';
+import {createDatabaseConnection} from "../../src/config/database";
 
 const testConnection = {
     async create(){
-        await createConnection();
+        await createDatabaseConnection();
     },
 
     async close(){
