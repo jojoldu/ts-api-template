@@ -1,6 +1,9 @@
 import {Article} from "./Article";
 import {createQueryBuilder, EntityRepository, Repository} from "typeorm";
 
+/**
+ * Read
+ */
 @EntityRepository(Article)
 export class ArticleQueryRepository {
 
