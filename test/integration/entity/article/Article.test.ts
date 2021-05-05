@@ -18,17 +18,6 @@ describe('Article CRUD', () => {
         await testConnection.clear();
     });
 
-
-    test('Article 생성', async () => {
-        const now = new Date();
-        const article = Article.create(now, '테스트', '테스트데이터', 'jojoldu');
-
-        let articleRepository = getRepository(Article);
-        await articleRepository.save(article);
-        let savedArticles = await articleRepository.find();
-        console.log("All articles from the db: ", savedArticles);
-    })
-
     test('Article publish on', async () => {
         // given
         const now = new Date();
