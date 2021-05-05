@@ -1,5 +1,5 @@
 import {Article} from "./Article";
-import {createQueryBuilder, EntityRepository, Repository} from "typeorm";
+import {createQueryBuilder, EntityRepository} from "typeorm";
 
 /**
  * Read
