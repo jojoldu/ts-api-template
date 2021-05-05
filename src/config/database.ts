@@ -1,5 +1,4 @@
 import 'reflect-metadata';
-import { initializeTransactionalContext } from 'typeorm-transactional-cls-hooked';
 import Container from "typedi";
 import { createConnection, ConnectionOptions, useContainer } from "typeorm";
 import { env } from "./env";
@@ -33,7 +32,6 @@ export async function createDatabaseConnection(): Promise<void> {
             },
             namingStrategy: new SnakeNamingStrategy(),
         };
-        initializeTransactionalContext();
         useContainer(Container);
         await createConnection(connectionOption);
     } catch (error) {

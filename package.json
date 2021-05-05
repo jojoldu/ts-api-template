@@ -22,7 +22,6 @@
     "typedi": "0.8.0",
     "typeorm": "0.2.32",
     "typeorm-naming-strategies": "^2.0.0",
-    "typeorm-transactional-cls-hooked": "^0.1.20",
     "typeorm-typedi-extensions": "^0.4.1"
   },
   "scripts": {
