@@ -1,5 +1,5 @@
 import {ArticleService} from "../service/article/ArticleService";
-import {Body, HttpCode, JsonController, Post, Res} from "routing-controllers";
+import { Body, HttpCode, JsonController, Param, Post, Res } from "routing-controllers";
 import {Response} from "express";
 import {ArticleCreateDto} from "../service/article/dto/ArticleCreateDto";
 
@@ -13,8 +13,15 @@ export class ArticleController {
         @Body() createDto: ArticleCreateDto,
         @Res() res: Response,
     ) {
-        return await this.articleService.create(createDto, false, null);
+        return await this.articleService.create(createDto, null);
     }
 
-
+    @HttpCode(200)
+    @Post('/:id/publish')
+    public async publish(
+        @Param("id") id: number,
+        @Res() res: Response,
+    ) {
+        return await this.articleService.publish(id, null);
+    }
 }

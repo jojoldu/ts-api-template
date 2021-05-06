@@ -13,7 +13,6 @@ export class ArticleService {
     @Transaction()
     async create(
         articleCreateDto: ArticleCreateDto,
-        isError: boolean,
         @TransactionManager() manager?: EntityManager
     ): Promise<Number> {
         const article = await manager.save(articleCreateDto.toEntity());
@@ -23,7 +22,6 @@ export class ArticleService {
     @Transaction()
     async publish(
         id: number,
-        isError: boolean,
         @TransactionManager() manager?: EntityManager
     ): Promise<void> {
         const article = await this.articleQueryRepository.findOneById(id);

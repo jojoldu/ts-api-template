@@ -13,19 +13,19 @@ export class App {
 
     constructor() {
         this.app = express();
-        this.setIndex();
+        this.setStaticResource();
         this.setDatabase();
         this.setMiddlewares();
     }
 
-    private async setIndex(): Promise<void> {
+    private setStaticResource(): void {
         this.app.use(express.static(path.join(__dirname, 'public')));
         // app.use('/', indexRouter);
     }
     /**
      * 데이터베이스를 세팅한다.
      */
-    private async setDatabase(): Promise<void> {
+    public async setDatabase(): Promise<void> {
         try {
             await createDatabaseConnection();
         } catch (error) {
@@ -46,7 +46,7 @@ export class App {
      * Express를 시작한다.
      * @param port 포트
      */
-    public async createExpressServer(port: number): Promise<void> {
+    public createExpressServer(port: number): void {
         try {
             routingUseContainer(Container);
             useExpressServer(this.app,
@@ -67,3 +67,4 @@ export class App {
         }
     }
 }
+

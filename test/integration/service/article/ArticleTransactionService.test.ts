@@ -74,9 +74,10 @@ describe('ArticleService CRUD', () => {
         // then
         const result = await articleQueryRepository.findOneById(id);
         expect(result.isPublished).toBe(true);
+        expect(result.updatedAt >= now).toBeTruthy();
     })
 
-    test('ArticleService update rollback', async () => {
+    test('Article public 롤백시 isPublish는 상태가 원복된다', async () => {
         // given
         const now = new Date();
         const targetTitle = '테스트';
