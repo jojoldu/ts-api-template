@@ -1,27 +1,29 @@
-import {createDatabaseConnection} from "./config/database";
+import { createDatabaseConnection } from "./config/database";
 import {
+    createExpressServer,
     useContainer as routingUseContainer,
     useExpressServer,
 } from "routing-controllers";
 import * as path from "path";
-import {Container} from "typedi";
+import { Container } from "typedi";
 import express = require("express");
 import * as bodyParser from "body-parser";
 
 export class App {
-    public app: express.Application;
+    public app;
 
     constructor() {
-        this.app = express();
+        this.app = this.createExpress();
         this.setStaticResource();
         this.setDatabase();
         this.setMiddlewares();
     }
 
     private setStaticResource(): void {
-        this.app.use(express.static(path.join(__dirname, 'public')));
+        this.app.use(express.static(path.join(__dirname, "public")));
         // app.use('/', indexRouter);
     }
+
     /**
      * 데이터베이스를 세팅한다.
      */
@@ -42,26 +44,18 @@ export class App {
         // this.app.use(morgan("combined", { stream }));
     }
 
-    /**
-     * Express를 시작한다.
-     * @param port 포트
-     */
-    public createExpressServer(port: number): void {
+    private createExpress() {
         try {
             routingUseContainer(Container);
-            useExpressServer(this.app,
-                {
-                    cors: true,
-                    routePrefix: '/api',
-                    controllers: [`${__dirname}/../controllers/*{.ts,.js}`],
-                    middlewares: [`${__dirname}/../middlewares/*{.ts,.js}`],
-                });
+            return createExpressServer({
+                // cors: true,
+                routePrefix: "/api",
+                controllers: [`${__dirname}/../controllers/*{.ts,.js}`],
+                middlewares: [`${__dirname}/../middlewares/*{.ts,.js}`],
+            });
             // useSwagger(this.app);
             // useSentry(this.app);
 
-            this.app.listen(port, () => {
-                console.info(`Server is running on http://localhost:${port}`);
-            });
         } catch (error) {
             console.error(error);
         }

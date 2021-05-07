@@ -13,7 +13,12 @@ export class ArticleController {
         @Body() createDto: ArticleCreateDto,
         @Res() res: Response,
     ) {
-        return await this.articleService.create(createDto, null);
+        try{
+            return await this.articleService.create(createDto, null);
+        }catch (e) {
+            console.error('에러 발생', e);
+            return null;
+        }
     }
 
     @HttpCode(200)

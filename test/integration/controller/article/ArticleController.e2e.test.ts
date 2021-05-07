@@ -1,9 +1,10 @@
 import { ArticleCreateDto } from "../../../../src/service/article/dto/ArticleCreateDto";
+import { App } from "../../../../src/app";
 
-const app = require('../../../../src/app');
 const request = require('supertest');
 
 describe('ArticleController HTTP Request', () => {
+    const app = new App().app;
 
     test('ArticleController Http create', async () => {
         // given
@@ -12,12 +13,13 @@ describe('ArticleController HTTP Request', () => {
         const reqDto = new ArticleCreateDto(now, targetTitle, '테스트데이터', 'jojoldu');
 
         // when
-        const userRes = await request(app)
+        const res = await request(app)
             .post('/api/article')
             .send(reqDto);
 
         // then
-        expect(userRes.body.data).toBeGreaterThanOrEqual(1);
+        expect(res.status).toBe(200);
+        expect(res.body.data).toBeGreaterThanOrEqual(1);
     })
 })
 
