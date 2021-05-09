@@ -1,5 +1,7 @@
 {
    "compilerOptions": {
+      "strict": true,
+      "strictPropertyInitialization": false,
       "lib": [
          "es5",
          "es6"

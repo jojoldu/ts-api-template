@@ -22,6 +22,10 @@ export class Article extends BaseTimeEntity{
     @Column()
     isPublished: boolean;
 
+    constructor() {
+        super();
+    }
+
     static create(reservationDate: Date, title: string, content: string, author: string) {
         let article = new Article();
         article.reservationDate = reservationDate;
