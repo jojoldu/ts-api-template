@@ -15,6 +15,7 @@ export class ArticleService {
         articleCreateDto: ArticleCreateDto,
         @TransactionManager() manager?: EntityManager
     ): Promise<Number> {
+        // @ts-ignore
         const article = await manager.save(articleCreateDto.toEntity());
         return article.id;
     }
@@ -25,7 +26,13 @@ export class ArticleService {
         @TransactionManager() manager?: EntityManager
     ): Promise<void> {
         const article = await this.articleQueryRepository.findOneById(id);
+        if(article === undefined) {
+            console.info(`ID:${id} article이 존재하지 않습니다.`);
+            return ;
+        }
+
         article.publish();
+        // @ts-ignore
         await manager.save(article);
     }
 
