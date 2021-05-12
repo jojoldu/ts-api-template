@@ -1,24 +1,36 @@
 import { createDatabaseConnection } from "./config/database";
-import {
-    createExpressServer,
-    useContainer as routingUseContainer,
-    useExpressServer,
-} from "routing-controllers";
+import { createExpressServer, useContainer as routingUseContainer, useExpressServer } from "routing-controllers";
 import * as path from "path";
 import { Container } from "typedi";
-import express = require("express");
 import * as bodyParser from "body-parser";
+import express = require("express");
+import { ArticleController } from "./controller/ArticleController";
 
 export class App {
     public app;
 
     constructor() {
-        this.app = this.createExpress();
+        this.app = express();
+        this.setExpress();
         this.setStaticResource();
         this.setDatabase();
         this.setMiddlewares();
     }
 
+    private setExpress(): void {
+        try {
+            routingUseContainer(Container);
+            useExpressServer(this.app, {
+                routePrefix: "/api",
+                // cors: true,
+                controllers: [`${__dirname}/controller/*.ts`],
+                middlewares: [`${__dirname}/middleware/*.ts`]
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    
     private setStaticResource(): void {
         this.app.use(express.static(path.join(__dirname, "public")));
         // app.use('/', indexRouter);
@@ -42,23 +54,8 @@ export class App {
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
         // this.app.use(morgan("combined", { stream }));
-    }
-
-    private createExpress() {
-        try {
-            routingUseContainer(Container);
-            return createExpressServer({
-                // cors: true,
-                routePrefix: "/api",
-                controllers: [`${__dirname}/../controllers/*{.ts,.js}`],
-                middlewares: [`${__dirname}/../middlewares/*{.ts,.js}`],
-            });
-            // useSwagger(this.app);
-            // useSentry(this.app);
-
-        } catch (error) {
-            console.error(error);
-        }
+        // useSwagger(this.app);
+        // useSentry(this.app);
     }
 }
 
