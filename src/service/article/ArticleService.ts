@@ -3,12 +3,17 @@ import {InjectRepository} from "typeorm-typedi-extensions";
 import {ArticleQueryRepository} from "../../entity/article/ArticleQueryRepository";
 import {ArticleCreateDto} from "./dto/ArticleCreateDto";
 import {EntityManager, Transaction, TransactionManager} from "typeorm";
+import { Article } from "../../entity/article/Article";
 
 @Service()
 export class ArticleService {
     constructor(
         @InjectRepository() private articleQueryRepository: ArticleQueryRepository,
         ) {}
+
+    async findAll(): Promise<Article[]> {
+        return await this.articleQueryRepository.findAll();
+    }
 
     @Transaction()
     async create(

@@ -33,7 +33,7 @@ describe('ArticleService CRUD', () => {
 
         // when
         const id = await articleService.createTransaction(
-            new ArticleCreateDto(now, targetTitle, '테스트데이터', 'jojoldu'),
+            ArticleCreateDto.create(now, targetTitle, '테스트데이터', 'jojoldu'),
             false,
             null);
 
@@ -51,7 +51,7 @@ describe('ArticleService CRUD', () => {
         // when
         try {
             await articleService.createTransaction(
-                new ArticleCreateDto(now, targetTitle, '테스트데이터', 'jojoldu'),
+                ArticleCreateDto.create(now, targetTitle, '테스트데이터', 'jojoldu'),
                 true,
                 null)
         } catch (e) {}

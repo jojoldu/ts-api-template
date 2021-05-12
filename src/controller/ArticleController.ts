@@ -1,5 +1,5 @@
 import {ArticleService} from "../service/article/ArticleService";
-import { Body, HttpCode, JsonController, Param, Post, Res } from "routing-controllers";
+import { Body, Get, HttpCode, JsonController, Param, Post, Res } from "routing-controllers";
 import {Response} from "express";
 import {ArticleCreateDto} from "../service/article/dto/ArticleCreateDto";
 
@@ -8,7 +8,20 @@ export class ArticleController {
     constructor(private articleService: ArticleService) {}
 
     @HttpCode(200)
-    @Post()
+    @Get('/')
+    public async get(
+        @Res() res: Response,
+    ) {
+        try{
+            return await this.articleService.findAll();
+        }catch (e) {
+            console.error('에러 발생', e);
+            return null;
+        }
+    }
+
+    @HttpCode(200)
+    @Post('/')
     public async create(
         @Body() createDto: ArticleCreateDto,
         @Res() res: Response,

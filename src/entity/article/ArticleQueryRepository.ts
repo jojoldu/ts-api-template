@@ -7,6 +7,13 @@ import {createQueryBuilder, EntityRepository} from "typeorm";
 @EntityRepository(Article)
 export class ArticleQueryRepository {
 
+    findAll () {
+        return createQueryBuilder()
+            .select("article")
+            .from(Article, "article")
+            .getMany();
+    }
+
     findOneById(id: number) {
         return createQueryBuilder()
             .select("article")
