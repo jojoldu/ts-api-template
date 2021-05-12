@@ -1,10 +1,36 @@
 import { ArticleCreateDto } from "../../../../src/service/article/dto/ArticleCreateDto";
 import { App } from "../../../../src/app";
+import testConnection from "../../testConnection";
 
 const request = require('supertest');
 
 describe('ArticleController HTTP Request', () => {
-    const app = new App().app;
+    let app;
+
+    beforeAll(async ()=>{
+        app = new App().app;
+        await testConnection.create();
+    });
+
+    afterAll(async ()=>{
+        app = null;
+        await testConnection.close();
+    });
+
+    afterEach(async () => {
+        await testConnection.clear();
+    });
+
+    test('ArticleController Http get', async () => {
+        // when
+        const res = await request(app)
+            .get('/api/article')
+            .send();
+
+        // then
+        console.log(JSON.stringify(res.text));
+        expect(res.status).toBe(200);
+    })
 
     test('ArticleController Http create', async () => {
         // given

@@ -1,9 +1,9 @@
-import {Article} from "../../../entity/article/Article";
-import { MaxLength } from "class-validator";
+import { Article } from "../../../entity/article/Article";
+import { MinLength } from "class-validator";
 
 export class ArticleCreateDto {
     reservationDate: Date;
-    @MaxLength(200, { message: 'Title is too long', })
+    @MinLength(1, { message: 'Title is too short', })
     title: string;
     content: string;
     author: string;
