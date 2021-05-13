@@ -25,5 +25,6 @@ export const env = {
         synchronize: process.env.TYPEORM_SYNCHRONIZE === "true",
         logging: process.env.TYPEORM_LOGGING === "true",
         dropSchema: process.env.TYPEORM_DROP_SCHEMA === "true",
+        migration: process.env.TYPEORM_MIGRATION === "true"
     },
 };

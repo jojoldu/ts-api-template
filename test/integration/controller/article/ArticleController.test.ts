@@ -28,7 +28,7 @@ describe('ArticleController HTTP Request', () => {
             .send();
 
         // then
-        console.log(JSON.stringify(res.text));
+        console.log(`result=${JSON.stringify(res.text)}`);
         expect(res.status).toBe(200);
     })
 

@@ -1,8 +1,8 @@
-import 'reflect-metadata';
+import "reflect-metadata";
 import Container from "typedi";
-import { createConnection, ConnectionOptions, useContainer } from "typeorm";
+import { ConnectionOptions, createConnection, useContainer } from "typeorm";
 import { env } from "./env";
-import {SnakeNamingStrategy} from "typeorm-naming-strategies";
+import { ConstraintSnakeNamingStrategy } from "./ConstraintSnakeNamingStrategy";
 
 export async function createDatabaseConnection(): Promise<void> {
     try {
@@ -20,7 +20,7 @@ export async function createDatabaseConnection(): Promise<void> {
                 "src/entity/**/*.ts"
             ],
             migrations: [
-                'src/migration/**/*.ts'
+                'migration/**/*.ts'
             ],
             subscribers: [
                 'src/subscriber/**/*.ts'
@@ -30,10 +30,20 @@ export async function createDatabaseConnection(): Promise<void> {
                 "migrationsDir": "src/migration",
                 "subscribersDir": "src/subscriber"
             },
-            namingStrategy: new SnakeNamingStrategy(),
+            namingStrategy: new ConstraintSnakeNamingStrategy(),
         };
         useContainer(Container);
-        await createConnection(connectionOption);
+        const connection = await createConnection(connectionOption);
+
+        if(env.database.migration) {
+            console.log('run dropDatabase...');
+            await connection.dropDatabase();
+            console.log('run migrations...');
+            await connection.runMigrations();
+            // console.log('run synchronize...');
+            // await connection.synchronize();
+        }
+
     } catch (error) {
         throw error;
     }
