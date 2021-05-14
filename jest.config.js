@@ -1,6 +1,8 @@
 module.exports = {
     moduleFileExtensions: ['js', 'json', 'ts'],
-    rootDir: './',
+    testPathIgnorePatterns: [
+        "<rootDir>/node_modules/"
+    ],
     testMatch: [
         '<rootDir>/test/unit/**/*.test.ts',
         '<rootDir>/test/config/**/*.test.ts',
@@ -11,11 +13,15 @@ module.exports = {
     },
     collectCoverageFrom: [
         'src/**/*.ts',
-        '!src/main.ts',
+        '!src/app.ts',
+        '!src/start.ts',
         '!src/**/*.config.ts',
         '!src/**/entity/**',
         '!src/**/exception/**',
     ],
     coverageDirectory: 'coverage',
     testEnvironment: 'node',
+    setupFilesAfterEnv: [
+        "<rootDir>/test/setup.ts"
+    ],
 };

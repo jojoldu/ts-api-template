@@ -33,16 +33,7 @@ export async function createDatabaseConnection(): Promise<void> {
             namingStrategy: new ConstraintSnakeNamingStrategy(),
         };
         useContainer(Container);
-        const connection = await createConnection(connectionOption);
-
-        if(env.database.migration) {
-            console.log('run dropDatabase...');
-            await connection.dropDatabase();
-            console.log('run migrations...');
-            await connection.runMigrations();
-            // console.log('run synchronize...');
-            // await connection.synchronize();
-        }
+        await createConnection(connectionOption);
 
     } catch (error) {
         throw error;
