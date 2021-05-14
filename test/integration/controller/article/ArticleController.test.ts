@@ -1,35 +1,39 @@
 import { ArticleCreateDto } from "../../../../src/service/article/dto/ArticleCreateDto";
 import { App } from "../../../../src/app";
-import testConnection from "../../testConnection";
+import { getCustomRepository } from "typeorm";
+import { ArticleRepository } from "../../../../src/entity/article/ArticleRepository";
+import { Article } from "../../../../src/entity/article/Article";
 
 const request = require('supertest');
 
 describe('ArticleController HTTP Request', () => {
     let app;
+    let articleRepository;
 
     beforeAll(async ()=>{
         app = new App().app;
-        await testConnection.create();
+        articleRepository = getCustomRepository(ArticleRepository);
     });
 
     afterAll(async ()=>{
         app = null;
-        await testConnection.close();
     });
 
-    afterEach(async () => {
-        await testConnection.clear();
-    });
+    test('get 호출시 전체 Article을 가져온다', async () => {
+        // given
+        const title = 'title';
+        const article = Article.create(new Date(), title, 'content', 'author');
+        articleRepository.save(article);
 
-    test('ArticleController Http get', async () => {
         // when
         const res = await request(app)
             .get('/api/article')
             .send();
 
         // then
-        console.log(`result=${JSON.stringify(res.text)}`);
         expect(res.status).toBe(200);
+        expect(res.body).toHaveLength(1);
+        expect(res.body[0].title).toBe(title);
     })
 
     test('ArticleController Http create', async () => {
@@ -45,7 +49,7 @@ describe('ArticleController HTTP Request', () => {
 
         // then
         expect(res.status).toBe(200);
-        expect(res.body.data).toBeGreaterThanOrEqual(1);
+        expect(res.body).toBeGreaterThanOrEqual(1);
     })
 })
 

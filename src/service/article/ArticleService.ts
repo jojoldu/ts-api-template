@@ -22,7 +22,7 @@ export class ArticleService {
     ): Promise<Number> {
         // @ts-ignore
         const article = await manager.save(articleCreateDto.toEntity());
-        return article.id;
+        return Number(article.id);
     }
 
     @Transaction()

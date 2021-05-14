@@ -6,14 +6,6 @@ import {ArticleQueryRepository} from "../../../../src/entity/article/ArticleQuer
 
 describe('Article CRUD', () => {
 
-    beforeAll(async () => {
-        await testConnection.create();
-    });
-
-    afterAll(async () => {
-        await testConnection.close();
-    });
-
     afterEach(async () => {
         await testConnection.clear();
     });
