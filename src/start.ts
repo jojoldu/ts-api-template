@@ -1,3 +1,5 @@
+require('pinpoint-node-agent');
+
 import { App } from "./app";
 
 try {

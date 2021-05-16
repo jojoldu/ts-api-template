@@ -2,5 +2,13 @@
   "watch": ["./src"],
   "ext": "ts",
   "ignore": ["./test/*"],
-  "exec": "ts-node src/start.ts --watch"
+  "exec": "ts-node src/start.ts --watch",
+  "env": {
+    "PINPOINT_CONTAINER": "false",
+    "PINPOINT_AGENT_ID": "localhost",
+    "PINPOINT_APPLICATION_NAME": "ts-api-template",
+    "PINPOINT_LOG_LEVEL": "WARN",
+    "PINPOINT_SAMPLING_RATE": "1",
+    "PINPOINT_TRACE_EXCLUSION_URL_PATTERN": "/stylesheets/**"
+  }
 }
