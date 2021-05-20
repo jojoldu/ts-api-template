@@ -1,6 +1,7 @@
 require('pinpoint-node-agent');
 
 import { App } from "./app";
+import 'pinpoint-node-agent'
 
 try {
     const app = new App().app;
@@ -12,3 +13,4 @@ try {
 } catch (error) {
     console.error(error);
 }
+
