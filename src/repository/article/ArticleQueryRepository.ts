@@ -1,4 +1,4 @@
-import {Article} from "./Article";
+import {Article} from "../../entity/article/Article";
 import {createQueryBuilder, EntityRepository} from "typeorm";
 
 /**

@@ -4,7 +4,7 @@ import {getCustomRepository} from "typeorm";
 import {ArticleTransactionService} from "../../../../src/service/article/ArticleTransactionService";
 import {ArticleCreateDto} from "../../../../src/service/article/dto/ArticleCreateDto";
 import {ArticleRepository} from "../../../../src/entity/article/ArticleRepository";
-import {ArticleQueryRepository} from "../../../../src/entity/article/ArticleQueryRepository";
+import {ArticleQueryRepository} from "../../../../src/repository/article/ArticleQueryRepository";
 
 describe('ArticleService CRUD', () => {
     let articleRepository: ArticleRepository;

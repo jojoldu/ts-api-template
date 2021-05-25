@@ -1,6 +1,6 @@
 import {Service} from "typedi";
 import {InjectRepository} from "typeorm-typedi-extensions";
-import {ArticleQueryRepository} from "../../entity/article/ArticleQueryRepository";
+import {ArticleQueryRepository} from "../../repository/article/ArticleQueryRepository";
 import {ArticleCreateDto} from "./dto/ArticleCreateDto";
 import {EntityManager, Transaction, TransactionManager} from "typeorm";
 import { Article } from "../../entity/article/Article";
