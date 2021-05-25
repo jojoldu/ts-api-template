@@ -1,3 +1,5 @@
+import logger from "./config/logger";
+
 require('pinpoint-node-agent');
 
 import { App } from "./app";
@@ -8,9 +10,9 @@ try {
     const port = 4000;
 
     app.listen(port, () => {
-        console.info(`Server is running on http://localhost:${port}`);
+        logger.info(`Server is running on http://localhost:${port}`);
     });
 } catch (error) {
-    console.error(error);
+    logger.error(error);
 }
 

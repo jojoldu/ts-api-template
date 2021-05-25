@@ -2,6 +2,7 @@ import {ArticleService} from "../service/article/ArticleService";
 import { Body, Get, HttpCode, JsonController, Param, Post, Res } from "routing-controllers";
 import {Response} from "express";
 import {ArticleCreateDto} from "../service/article/dto/ArticleCreateDto";
+import logger from "../config/logger";
 
 @JsonController("/article")
 export class ArticleController {
@@ -15,7 +16,7 @@ export class ArticleController {
         try{
             return await this.articleService.findAll();
         }catch (e) {
-            console.error('에러 발생', e);
+            logger.error('에러 발생', e);
             return null;
         }
     }
@@ -29,7 +30,7 @@ export class ArticleController {
         try{
             return await this.articleService.create(createDto, null);
         }catch (e) {
-            console.error('에러 발생', e);
+            logger.error('에러 발생', e);
             return null;
         }
     }

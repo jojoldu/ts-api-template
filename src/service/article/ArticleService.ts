@@ -4,6 +4,7 @@ import {ArticleQueryRepository} from "../../entity/article/ArticleQueryRepositor
 import {ArticleCreateDto} from "./dto/ArticleCreateDto";
 import {EntityManager, Transaction, TransactionManager} from "typeorm";
 import { Article } from "../../entity/article/Article";
+import logger from "../../config/logger";
 
 @Service()
 export class ArticleService {
@@ -32,7 +33,7 @@ export class ArticleService {
     ): Promise<void> {
         const article = await this.articleQueryRepository.findOneById(id);
         if(article === undefined) {
-            console.info(`ID:${id} article이 존재하지 않습니다.`);
+            logger.info(`ID:${id} article이 존재하지 않습니다.`);
             return ;
         }
 

@@ -5,6 +5,7 @@ import { Container } from "typedi";
 import * as bodyParser from "body-parser";
 import express = require("express");
 import { ArticleController } from "./controller/ArticleController";
+import logger from "./config/logger";
 
 export class App {
     public app;
@@ -27,7 +28,7 @@ export class App {
                 middlewares: [`${__dirname}/middleware/*.ts`]
             });
         } catch (error) {
-            console.error(error);
+            logger.error(error);
         }
     }
     
@@ -43,7 +44,7 @@ export class App {
         try {
             await createDatabaseConnection();
         } catch (error) {
-            console.error(error);
+            logger.error(error);
         }
     }
 
