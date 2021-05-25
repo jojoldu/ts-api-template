@@ -10,7 +10,6 @@
       "outDir": "./build",
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
-      "sourceMap": true,
-     "allowSyntheticDefaultImports": true
+      "sourceMap": true
    }
 }

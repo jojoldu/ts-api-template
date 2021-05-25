@@ -1,4 +1,6 @@
-import winston from 'winston';
+import {createLogger, transports, format } from 'winston';
+
+const { combine, timestamp, printf, colorize } = format;
 
 const levels = {
     error: 0,
@@ -9,42 +11,50 @@ const levels = {
 }
 
 const level = () => {
-    const logFileEnv = ['production', 'dev']
-    const env = process.env.NODE_ENV || 'local'
-    return logFileEnv.includes(env) ? 'debug' : 'warn'
+    return isConsole() ? 'debug' : 'warn'
 }
 
-winston.addColors({
-    error: 'red',
-    warn: 'yellow',
-    info: 'green',
-    http: 'magenta',
-    debug: 'white',
-})
+const isConsole = () => {
+    const logFileEnv = ['production', 'dev']
+    const env = process.env.NODE_ENV || 'local'
+    return !logFileEnv.includes(env);
+}
 
-const Logger = winston.createLogger({
+const logger = createLogger({
     level: level(),
     levels,
     format:
-        winston.format.combine(
-        winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss:ms' }),
-        winston.format.colorize({ all: true }),
-        winston.format.printf(
-            (info) => `${info.timestamp} ${info.level}: ${info.message}`,
-        ),
+        combine(
+        timestamp({ format: 'YYYY-MM-DD HH:mm:ss:ms' }),
+        printf(logFormat()),
     ),
     transports: [
-        new winston.transports.Console(),
-        new winston.transports.File({
+        new transports.File({
             filename: 'logs/error.log',
             level: 'error',
         }),
-        new winston.transports.File({
-            filename: 'info/info.log',
+        new transports.File({
+            filename: 'logs/info.log',
             level: 'info',
         }),
-        new winston.transports.File({ filename: 'logs/all.log' }),
+        new transports.File({
+            filename: 'logs/debug.log',
+            level: 'debug',
+        }),
     ]
 })
 
-export default Logger
+if (isConsole()) {
+    logger.add(new transports.Console({
+        format: combine(
+            colorize({ all: true }),
+            printf(logFormat()),
+        )
+    }));
+}
+
+function logFormat() {
+    return (info) => `[${info.level.toUpperCase()}] ${info.timestamp} - ${info.message}`;
+}
+
+export default logger

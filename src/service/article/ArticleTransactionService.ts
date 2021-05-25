@@ -3,6 +3,7 @@ import {InjectRepository} from "typeorm-typedi-extensions";
 import {ArticleQueryRepository} from "../../entity/article/ArticleQueryRepository";
 import {ArticleCreateDto} from "./dto/ArticleCreateDto";
 import {EntityManager, Transaction, TransactionManager} from "typeorm";
+import logger from "../../config/logger";
 
 @Service()
 export class ArticleTransactionService {
@@ -16,7 +17,7 @@ export class ArticleTransactionService {
         isError: boolean,
         @TransactionManager() manager?: EntityManager
     ): Promise<Number> {
-        console.log(articleCreateDto);
+        logger.info(JSON.stringify(articleCreateDto));
         const article = await manager.save(articleCreateDto.toEntity());
         if(isError) {
             throw new Error('Exception으로 인해 롤백된다');
