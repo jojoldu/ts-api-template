@@ -1,4 +1,4 @@
-const {SnakeNamingStrategy} = require("typeorm-naming-strategies");
+const { ConstraintSnakeNamingStrategy } = require("./src/config/ConstraintSnakeNamingStrategy");
 
 module.exports = {
     type: "postgres",
@@ -24,5 +24,5 @@ module.exports = {
         "migrationsDir": "src/migration",
         "subscribersDir": "src/subscriber"
     },
-    namingStrategy: new SnakeNamingStrategy(),
+    namingStrategy: new ConstraintSnakeNamingStrategy(),
 }

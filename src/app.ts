@@ -1,11 +1,10 @@
 import { createDatabaseConnection } from "./config/database";
-import { createExpressServer, useContainer as routingUseContainer, useExpressServer } from "routing-controllers";
+import { useContainer as routingUseContainer, useExpressServer } from "routing-controllers";
 import * as path from "path";
 import { Container } from "typedi";
 import * as bodyParser from "body-parser";
-import express = require("express");
-import { ArticleController } from "./controller/ArticleController";
 import logger from "./config/logger";
+import express = require("express");
 
 export class App {
     public app;

@@ -7,5 +7,5 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-    await testConnection.clear();
+    await testConnection.close();
 });

@@ -4,6 +4,7 @@
   "ignore": ["./test/*"],
   "exec": "ts-node src/start.ts --watch",
   "env": {
+    "PINPOINT_COLLECTOR_IP":"ec2-3-36-151-82.ap-northeast-2.compute.amazonaws.com",
     "PINPOINT_CONTAINER": "false",
     "PINPOINT_AGENT_ID": "localhost",
     "PINPOINT_APPLICATION_NAME": "ts-api-template",
