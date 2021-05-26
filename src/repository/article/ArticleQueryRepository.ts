@@ -31,30 +31,22 @@ export class ArticleQueryRepository {
             .getOne();
     }
 
-    findAllByDto (dto: ArticleSearchDto) {
-        return createQueryBuilder()
+    pagingByDto (dto: ArticleSearchDto) {
+        const queryBuilder = createQueryBuilder()
             .select("article")
             .from(Article, "article")
-            .andWhere(this.eqTitle(dto.title))
-            .andWhere(this.eqAuthor(dto.author))
-            .orderBy("article.id desc")
-            .getMany();
-    }
+            .orderBy("article.id", "DESC");
 
-    private eqTitle(title: string): string {
-        if(!title) {
-            return null;
+        if(dto.title) {
+            queryBuilder.andWhere("article.title = :title", {title: dto.title})
         }
 
-        return `article.title = :${title}`;
-    }
-
-    private eqAuthor(author: string): string {
-        if(!author) {
-            return null;
+        if(dto.author) {
+            queryBuilder.andWhere("article.author = :author", {author: dto.author})
         }
 
-        return `article.author = :${author}`;
+        return queryBuilder
+            .disableEscaping()
+            .getManyAndCount();
     }
-
 }

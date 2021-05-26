@@ -29,11 +29,14 @@ describe('Article 조회 테스트', () => {
         const dto = new ArticleSearchDto(targetTitle, null, null, null);
 
         // when
-        const articles = await articleQueryRepository.findAllByDto(dto);
+        const articlesAndCount = await articleQueryRepository.pagingByDto(dto);
+        const entities = articlesAndCount[0];
+        const count = articlesAndCount[1];
 
         // then
-        expect(articles).toHaveLength(1);
-        expect(articles[0].title).toBe(targetTitle);
+        expect(articlesAndCount).toHaveLength(2);
+        expect(entities).toHaveLength(1);
+        expect(count).toBe(1);
     })
 
 })
