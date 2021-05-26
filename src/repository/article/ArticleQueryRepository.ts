@@ -1,5 +1,6 @@
 import {Article} from "../../entity/article/Article";
 import {createQueryBuilder, EntityRepository} from "typeorm";
+import { ArticleSearchDto } from "./dto/ArticleSearchDto";
 
 /**
  * Read
@@ -28,6 +29,32 @@ export class ArticleQueryRepository {
             .from(Article, "article")
             .where("article.title = :title", { title: title })
             .getOne();
+    }
+
+    findAllByDto (dto: ArticleSearchDto) {
+        return createQueryBuilder()
+            .select("article")
+            .from(Article, "article")
+            .andWhere(this.eqTitle(dto.title))
+            .andWhere(this.eqAuthor(dto.author))
+            .orderBy("article.id desc")
+            .getMany();
+    }
+
+    private eqTitle(title: string): string {
+        if(!title) {
+            return null;
+        }
+
+        return `article.title = :${title}`;
+    }
+
+    private eqAuthor(author: string): string {
+        if(!author) {
+            return null;
+        }
+
+        return `article.author = :${author}`;
     }
 
 }

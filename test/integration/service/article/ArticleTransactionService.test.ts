@@ -11,7 +11,7 @@ describe('ArticleService CRUD', () => {
     let articleQueryRepository: ArticleQueryRepository;
     let articleService: ArticleTransactionService;
 
-    beforeAll(async () => {
+    beforeEach(async () => {
         articleRepository = getCustomRepository(ArticleRepository);
         articleQueryRepository = getCustomRepository(ArticleQueryRepository);
         articleService = new ArticleTransactionService(articleQueryRepository);
