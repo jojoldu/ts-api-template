@@ -27,7 +27,7 @@ export class Article extends BaseTimeEntity{
     }
 
     static create(reservationDate: Date, title: string, content: string, author: string) {
-        let article = new Article();
+        const article = new Article();
         article.reservationDate = reservationDate;
         article.title = title;
         article.content = content;
