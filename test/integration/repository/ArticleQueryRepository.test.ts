@@ -4,14 +4,18 @@ import { Article } from "../../../src/entity/article/Article";
 import { ArticleRepository } from "../../../src/entity/article/ArticleRepository";
 import { ArticleQueryRepository } from "../../../src/repository/article/ArticleQueryRepository";
 import { ArticleSearchDto } from "../../../src/repository/article/dto/ArticleSearchDto";
+import { UserRepository } from "../../../src/entity/user/UserRepository";
+import { User } from "../../../src/entity/user/User";
 
 describe('Article 조회 테스트', () => {
     let articleRepository: ArticleRepository;
     let articleQueryRepository: ArticleQueryRepository;
+    let userRepository: UserRepository;
 
     beforeEach(async () => {
         articleRepository = getCustomRepository(ArticleRepository);
         articleQueryRepository = getCustomRepository(ArticleQueryRepository);
+        userRepository = getCustomRepository(UserRepository);
     });
 
     afterEach(async () => {
@@ -22,9 +26,9 @@ describe('Article 조회 테스트', () => {
         // given
         const now = new Date();
         const targetTitle = '테스트';
-        const article = Article.create(now, targetTitle, '테스트데이터', 'jojoldu');
+        const article = Article.create(now, targetTitle, '테스트데이터', null);
         await articleRepository.save(article);
-        await articleRepository.save(Article.create(now, '', '테스트데이터', 'jojoldu'));
+        await articleRepository.save(Article.create(now, '', '테스트데이터', null));
 
         const dto = new ArticleSearchDto(targetTitle, null, null, null);
 
@@ -39,6 +43,22 @@ describe('Article 조회 테스트', () => {
         expect(count).toBe(1);
     })
 
+    test('join 조회', async () => {
+        // given
+        const now = new Date();
+        const userName = "userName";
+        const user = await userRepository.save(User.signup(userName, "jojoldu@gmail.com"));
+
+        const articleTitle = '테스트';
+        const article = await articleRepository.save(Article.create(now, articleTitle, '테스트데이터', user));
+
+        // when
+        const titleAndName = await articleQueryRepository.getTitleAndUserName(article.id);
+
+        // then
+        expect(titleAndName.title).toBe(articleTitle);
+        expect(titleAndName.name).toBe(userName);
+    })
 })
 
 

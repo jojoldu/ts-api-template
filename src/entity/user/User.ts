@@ -21,11 +21,12 @@ export class User extends BaseTimeEntity {
         super();
     }
 
-    static signup(name: string, email: string) {
+    static signup(name: string, email: string): User {
         const user = new User();
         user.name = name;
         user.email = email;
         user.activate();
+        return user;
     }
 
     deactivate(): void {
