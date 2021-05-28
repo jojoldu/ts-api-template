@@ -1,5 +1,6 @@
-import {Column, Entity} from "typeorm";
+import { Column, Entity, ManyToOne } from "typeorm";
 import {BaseTimeEntity} from "../BaseTimeEntity";
+import { User } from "../user/User";
 
 @Entity()
 export class Article extends BaseTimeEntity{
@@ -21,6 +22,9 @@ export class Article extends BaseTimeEntity{
 
     @Column()
     isPublished: boolean;
+
+    @ManyToOne(type => User, user => user.articles)
+    user: User;
 
     constructor() {
         super();
