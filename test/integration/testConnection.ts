@@ -14,16 +14,18 @@ const testConnection = {
         const connection = getConnection();
         const entities = connection.entityMetadatas;
 
+        // for (const entity of entities) {
+        //     await getConnection().query(`ALTER TABLE ${entity.tableName} DISABLE TRIGGER ALL`);
+        // }
+
         for (const entity of entities) {
-            await getConnection().createEntityManager()
-                .query(`ALTER TABLE ${entity.tableName} DISABLE TRIGGER ALL`);
 
-            const repository = connection.getRepository(entity.name);
-            await repository.clear();
-
-            await getConnection().createEntityManager()
-                .query(`ALTER TABLE ${entity.tableName} ENABLE TRIGGER ALL`);
+            // const repository = connection.getRepository(entity.name);
+            // await repository.clear();
+            await getConnection().query(`TRUNCATE TABLE ${entity.tableName} CASCADE`);
         }
+        // await getConnection().query(`ALTER TABLE ${entity.tableName} ENABLE TRIGGER ALL`);
     },
 };
+
 export default testConnection;

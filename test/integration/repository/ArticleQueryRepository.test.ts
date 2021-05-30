@@ -57,7 +57,7 @@ describe('Article 조회 테스트', () => {
 
         // then
         expect(titleAndName.title).toBe(articleTitle);
-        expect(titleAndName.name).toBe(userName);
+        expect(titleAndName.userName).toBe(userName);
     })
 })
 

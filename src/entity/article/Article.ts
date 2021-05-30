@@ -1,8 +1,9 @@
-import { Column, Entity, ManyToOne } from "typeorm";
+import { Column, Entity, Index, ManyToOne } from "typeorm";
 import {BaseTimeEntity} from "../BaseTimeEntity";
 import { User } from "../user/User";
 
 @Entity()
+@Index("idx_users_1", ["title", "reservationDate"])
 export class Article extends BaseTimeEntity{
 
     @Column({type:"timestamptz", nullable: true})
