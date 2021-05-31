@@ -49,4 +49,14 @@ export class ArticleQueryRepository {
             .disableEscaping()
             .getManyAndCount();
     }
+
+    getTitleAndUserName(articleId: number) {
+        return createQueryBuilder()
+            .select("article.title", "title")
+            .addSelect("user.name", "userName")
+            .from(Article, "article")
+            .innerJoin("article.user", "user", "user.isActive = :isActive", {isActive: true})
+            .where("article.id = :id", {id:articleId})
+            .getRawOne();
+    }
 }

@@ -1,5 +1,6 @@
-import {Column, Entity} from "typeorm";
+import { Column, Entity, OneToMany } from "typeorm";
 import {BaseTimeEntity} from "../BaseTimeEntity";
+import { Article } from "../article/Article";
 
 @Entity()
 export class User extends BaseTimeEntity {
@@ -13,15 +14,19 @@ export class User extends BaseTimeEntity {
     @Column()
     isActive: boolean;
 
+    @OneToMany(type => Article, article => article.user, {lazy: true})
+    articles: Article[];
+
     constructor() {
         super();
     }
 
-    static signup(name: string, email: string) {
+    static signup(name: string, email: string): User {
         const user = new User();
         user.name = name;
         user.email = email;
         user.activate();
+        return user;
     }
 
     deactivate(): void {
