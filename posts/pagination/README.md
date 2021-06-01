@@ -1,5 +1,8 @@
 # TypeORM에서 페이징 사용하기
 
+
+
+
 ```javascript
 export abstract class WebPageRequest {
     pageNo: number| 1;
@@ -64,3 +67,14 @@ describe('ApiPageResponseDto', () => {
 
 })
 ```
+
+## 마무리
+
+페이징은 성능 이슈가 심하기 때문에, 결과적으로 운영 환경의 데이터가 많아지면 많아질수록 다른 방식으로 개선해야만 하는데요.  
+
+* [1. NoOffset 사용하기](https://jojoldu.tistory.com/528)
+* [2. 커버링 인덱스 사용하기](https://jojoldu.tistory.com/529)
+* [3-1. 페이지 건수 고정하기](https://jojoldu.tistory.com/530)
+* [3-2. 첫 페이지 조회 결과 cache 하기](https://jojoldu.tistory.com/531)
+
+

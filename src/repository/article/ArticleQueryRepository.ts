@@ -1,6 +1,7 @@
 import {Article} from "../../entity/article/Article";
 import {createQueryBuilder, EntityRepository} from "typeorm";
 import { ArticleSearchDto } from "./dto/ArticleSearchDto";
+import { ArticleSearchRequest } from "../../controller/article/dto/ArticleSearchRequest";
 
 /**
  * Read
@@ -31,7 +32,7 @@ export class ArticleQueryRepository {
             .getOne();
     }
 
-    pagingByDto (dto: ArticleSearchDto) {
+    dynamicQueryByDto (dto: ArticleSearchDto) {
         const queryBuilder = createQueryBuilder()
             .select("article")
             .from(Article, "article")
@@ -58,5 +59,27 @@ export class ArticleQueryRepository {
             .innerJoin("article.user", "user", "user.isActive = :isActive", {isActive: true})
             .where("article.id = :id", {id:articleId})
             .getRawOne();
+    }
+
+    paging(param: ArticleSearchRequest){
+        const queryBuilder = createQueryBuilder()
+            .select("article") // select 는 Entity 대신에 Dto
+            .from(Article, "article");
+
+        /**
+         * 동적쿼리
+         */
+        if(param.hasReservationDate()) {
+            queryBuilder.andWhere("article.reservationDate >= :reservationDate", {reservationDate: param.reservationDate})
+        }
+
+        if(param.hasTitle()) {
+            queryBuilder.andWhere("article.title ilike %:title%", {title: param.title});
+        }
+
+        return queryBuilder
+            .limit(param.getLimit())
+            .offset(param.getOffset())
+            .getManyAndCount()
     }
 }

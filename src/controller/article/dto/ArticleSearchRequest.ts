@@ -1,0 +1,26 @@
+import { WebPageRequest } from "../../WebPageRequest";
+
+export class ArticleSearchRequest extends WebPageRequest{
+    reservationDate: Date | null;
+    title: string | null;
+
+    constructor() {
+        super();
+    }
+
+    static create(reservationDate: Date | null, title: string | null) {
+        const param = new ArticleSearchRequest();
+        param.reservationDate = reservationDate;
+        param.title = title;
+
+        return param;
+    }
+
+    hasReservationDate() : boolean {
+        return this.reservationDate != null;
+    }
+
+    hasTitle() : boolean {
+        return this.title != null;
+    }
+}
