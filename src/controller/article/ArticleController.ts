@@ -1,8 +1,8 @@
-import {ArticleService} from "../service/article/ArticleService";
+import {ArticleService} from "../../service/article/ArticleService";
 import { Body, Get, HttpCode, JsonController, Param, Post, Res } from "routing-controllers";
 import {Response} from "express";
-import {ArticleCreateDto} from "../service/article/dto/ArticleCreateDto";
-import logger from "../config/logger";
+import {ArticleCreateDto} from "../../service/article/dto/ArticleCreateDto";
+import logger from "../../config/logger";
 
 @JsonController("/article")
 export class ArticleController {

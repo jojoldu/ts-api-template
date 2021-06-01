@@ -21,7 +21,7 @@ describe('ArticleService CRUD', () => {
         await testConnection.clear();
     });
 
-    test('ArticleService create', async () => {
+    it('ArticleService create', async () => {
         // given
         const now = new Date();
         const targetTitle = '테스트';
@@ -38,7 +38,7 @@ describe('ArticleService CRUD', () => {
         expect(result.title).toBe(targetTitle);
     })
 
-    test('ArticleService create and rollback', async () => {
+    it('ArticleService create and rollback', async () => {
         // given
         const now = new Date();
         const targetTitle = '테스트';
@@ -56,7 +56,7 @@ describe('ArticleService CRUD', () => {
         expect(result).toBeUndefined();
     })
 
-    test('ArticleService update', async () => {
+    it('ArticleService update', async () => {
         // given
         const now = new Date();
         const targetTitle = '테스트';
@@ -72,7 +72,7 @@ describe('ArticleService CRUD', () => {
         expect(result.updatedAt >= now).toBeTruthy();
     })
 
-    test('Article public 롤백시 isPublish는 상태가 원복된다', async () => {
+    it('Article public 롤백시 isPublish는 상태가 원복된다', async () => {
         // given
         const now = new Date();
         const targetTitle = '테스트';

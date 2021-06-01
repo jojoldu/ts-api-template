@@ -19,10 +19,10 @@ describe('ArticleController HTTP Request', () => {
         app = null;
     });
 
-    test('get 호출시 전체 Article을 가져온다', async () => {
+    it('get 호출시 전체 Article을 가져온다', async () => {
         // given
         const title = 'title';
-        const article = Article.create(new Date(), title, 'content', 'author');
+        const article = Article.create(new Date(), title, 'content', null);
         articleRepository.save(article);
 
         // when
@@ -36,7 +36,7 @@ describe('ArticleController HTTP Request', () => {
         expect(res.body[0].title).toBe(title);
     })
 
-    test('ArticleController Http create', async () => {
+    it('ArticleController Http create', async () => {
         // given
         const now = new Date();
         const targetTitle = '테스트';

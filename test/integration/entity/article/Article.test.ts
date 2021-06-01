@@ -10,11 +10,11 @@ describe('Article CRUD', () => {
         await testConnection.clear();
     });
 
-    test('Article publish on', async () => {
+    it('Article publish on', async () => {
         // given
         const now = new Date();
         const targetTitle = '테스트';
-        const article = Article.create(now, targetTitle, '테스트데이터', 'jojoldu');
+        const article = Article.create(now, targetTitle, '테스트데이터', null);
         let articleRepository = getRepository(Article);
         await articleRepository.save(article);
 
@@ -28,11 +28,11 @@ describe('Article CRUD', () => {
         expect(result.isPublished).toBe(true);
     })
 
-    test('custom repository test', async () => {
+    it('custom repository test', async () => {
         // given
         const now = new Date();
         const targetTitle = '테스트';
-        const article = Article.create(now, targetTitle, '테스트데이터', 'jojoldu');
+        const article = Article.create(now, targetTitle, '테스트데이터', null);
         let articleRepository = getCustomRepository(ArticleRepository);
         await articleRepository.save(article);
 
@@ -43,11 +43,11 @@ describe('Article CRUD', () => {
         expect(savedArticle.title).toBe(targetTitle);
     })
 
-    test('custom repository test2', async () => {
+    it('custom repository test2', async () => {
         // given
         const now = new Date();
         const targetTitle = '테스트';
-        const article = Article.create(now, targetTitle, '테스트데이터', 'jojoldu');
+        const article = Article.create(now, targetTitle, '테스트데이터', null);
         let articleRepository = getCustomRepository(ArticleRepository);
         let articleQueryRepository = getCustomRepository(ArticleQueryRepository);
         await articleRepository.save(article);

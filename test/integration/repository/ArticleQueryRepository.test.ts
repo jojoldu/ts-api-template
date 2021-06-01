@@ -22,7 +22,7 @@ describe('Article 조회 테스트', () => {
         await testConnection.clear();
     });
 
-    test('동적 쿼리 테스트', async () => {
+    it('동적 쿼리 테스트', async () => {
         // given
         const now = new Date();
         const targetTitle = '테스트';
@@ -33,7 +33,7 @@ describe('Article 조회 테스트', () => {
         const dto = new ArticleSearchDto(targetTitle, null, null, null);
 
         // when
-        const articlesAndCount = await articleQueryRepository.pagingByDto(dto);
+        const articlesAndCount = await articleQueryRepository.dynamicQueryByDto(dto);
         const entities = articlesAndCount[0];
         const count = articlesAndCount[1];
 
@@ -43,7 +43,7 @@ describe('Article 조회 테스트', () => {
         expect(count).toBe(1);
     })
 
-    test('join 조회', async () => {
+    it('join 조회', async () => {
         // given
         const now = new Date();
         const userName = "userName";
