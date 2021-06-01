@@ -74,7 +74,7 @@ export class ArticleQueryRepository {
         }
 
         if(param.hasTitle()) {
-            queryBuilder.andWhere("article.title ilike %:title%", {title: param.title});
+            queryBuilder.andWhere("article.title ilike :title", {title: `%${param.title}%`});
         }
 
         return queryBuilder

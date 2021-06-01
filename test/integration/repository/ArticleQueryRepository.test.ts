@@ -6,6 +6,7 @@ import { ArticleQueryRepository } from "../../../src/repository/article/ArticleQ
 import { ArticleSearchDto } from "../../../src/repository/article/dto/ArticleSearchDto";
 import { UserRepository } from "../../../src/entity/user/UserRepository";
 import { User } from "../../../src/entity/user/User";
+import { ArticleSearchRequest } from "../../../src/controller/article/dto/ArticleSearchRequest";
 
 describe('Article 조회 테스트', () => {
     let articleRepository: ArticleRepository;
@@ -59,6 +60,23 @@ describe('Article 조회 테스트', () => {
         expect(titleAndName.title).toBe(articleTitle);
         expect(titleAndName.userName).toBe(userName);
     })
+
+    it("paging + ilike ", async () => {
+        const now = new Date();
+        const targetTitle = 'Test';
+        const article = Article.create(now, targetTitle, '테스트데이터', null);
+        await articleRepository.save(article);
+
+        //when
+        const result = await articleQueryRepository.paging(ArticleSearchRequest.create(now, 'test', 1, 10));
+        const entities = result[0];
+        const count = result[1];
+        //then
+        expect(entities).toHaveLength(1);
+        expect(entities[0].title).toBe(targetTitle);
+        expect(count).toBe(1);
+
+    });
 })
 
 
