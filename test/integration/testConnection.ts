@@ -1,31 +1,29 @@
-import { createConnection, getConnection, getConnectionManager } from "typeorm";
-import {createDatabaseConnection} from "../../src/config/database";
+import { Connection, createConnection, EntityMetadata, getConnection, getConnectionManager } from "typeorm";
+import { createDatabaseConnection } from "../../src/config/database";
 
 const testConnection = {
-    async create(){
+    async create() {
         await createDatabaseConnection();
     },
 
-    async close(){
+    async close() {
         await getConnection().close();
     },
 
-    async clear(){
+    async clear() {
         const connection = getConnection();
         const entities = connection.entityMetadatas;
 
-        // for (const entity of entities) {
-        //     await getConnection().query(`ALTER TABLE ${entity.tableName} DISABLE TRIGGER ALL`);
-        // }
-
-        for (const entity of entities) {
-
-            // const repository = connection.getRepository(entity.name);
-            // await repository.clear();
-            await getConnection().query(`TRUNCATE TABLE ${entity.tableName} CASCADE`);
-        }
-        // await getConnection().query(`ALTER TABLE ${entity.tableName} ENABLE TRIGGER ALL`);
+        await Promise.all(entities.map(e => this.deleteAll(e.name)));
     },
+
+    async deleteAll(entityName: string) {
+        const connection = getConnection();
+        const repository = connection.getRepository(entityName);
+        const items = await repository.find();
+        return repository.remove(items);
+    },
+
 };
 
 export default testConnection;

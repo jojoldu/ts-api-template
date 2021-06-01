@@ -14,7 +14,7 @@ export class User extends BaseTimeEntity {
     @Column()
     isActive: boolean;
 
-    @OneToMany(type => Article, article => article.user, {lazy: true})
+    @OneToMany(type => Article, article => article.user, {lazy: true, cascade: true})
     articles: Article[];
 
     constructor() {
