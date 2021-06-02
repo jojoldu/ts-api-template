@@ -75,7 +75,6 @@ describe('Article 조회 테스트', () => {
         expect(entities).toHaveLength(1);
         expect(entities[0].title).toBe(targetTitle);
         expect(count).toBe(1);
-
     });
 })
 

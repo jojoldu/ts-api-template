@@ -5,6 +5,8 @@ import {ArticleCreateDto} from "./dto/ArticleCreateDto";
 import {EntityManager, Transaction, TransactionManager} from "typeorm";
 import { Article } from "../../entity/article/Article";
 import logger from "../../config/logger";
+import { ArticleSearchRequest } from "../../controller/article/dto/ArticleSearchRequest";
+import { PageBody } from "../PageBody";
 
 @Service()
 export class ArticleService {
@@ -14,6 +16,11 @@ export class ArticleService {
 
     async findAll(): Promise<Article[]> {
         return await this.articleQueryRepository.findAll();
+    }
+
+    async findByTitle(param: ArticleSearchRequest){
+        const result = await this.articleQueryRepository.paging(param);
+        return new PageBody(result[1], param.pageSize, result[0]);
     }
 
     @Transaction()

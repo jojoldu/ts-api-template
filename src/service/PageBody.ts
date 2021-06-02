@@ -1,4 +1,4 @@
-export class WebPageResponse<T> {
+export class PageBody<T> {
     pageSize: number;
     totalCount: number;
     totalPage: number;
@@ -9,5 +9,9 @@ export class WebPageResponse<T> {
         this.totalCount = totalCount;
         this.totalPage = Math.ceil(totalCount/pageSize);
         this.items = items;
+    }
+
+    static createByManyAndCount(manyAndCount, pageSize) {
+        return new PageBody(manyAndCount.get(1), pageSize, manyAndCount.get(0));
     }
 }

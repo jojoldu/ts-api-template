@@ -20,7 +20,7 @@ export abstract class WebPageRequest {
 ```
 
 ```javascript
-export class WebPageResponse<T> {
+export class PageBody<T> {
     pageSize: number;
     totalCount: number;
     totalPage: number;
@@ -36,25 +36,33 @@ export class WebPageResponse<T> {
 ```
 
 ```javascript
-    paging(param: CouponSearchParam){
-        const queryBuilder = createQueryBuilder()
-            .select("coupon") // select 는 Entity 대신에 Dto
-            .from(Coupon, "coupon");
+paging(param: ArticleSearchRequest){
+    const queryBuilder = createQueryBuilder()
+        .select("article") // select 는 Entity 대신에 Dto
+        .from(Article, "article");
 
-        /**
-         * 동적쿼리
-         */
-        return queryBuilder
-            .limit(param.getLimit())
-            .offset(param.getOffset())
-            .getManyAndCount()
+    /**
+        * 동적쿼리
+        */
+    if(param.hasReservationDate()) {
+        queryBuilder.andWhere("article.reservationDate >= :reservationDate", {reservationDate: param.reservationDate})
     }
+
+    if(param.hasTitle()) {
+        queryBuilder.andWhere("article.title ilike :title", {title: `%${param.title}%`});
+    }
+
+    return queryBuilder
+        .limit(param.getLimit())
+        .offset(param.getOffset())
+        .getManyAndCount()
+}
 ```
 
 ## 테스트
 
 ```javascript
-describe('ApiPageResponseDto', () => {
+describe('WebPageResponse', () => {
     it.each([
         [10, 10, 1],
         [11, 10, 2],
@@ -62,10 +70,27 @@ describe('ApiPageResponseDto', () => {
         [9, 10, 1],
         [0, 10, 0],
     ])('totalCount=%i, pageSize=%i 이면 totalPage=%i', (totalCount, pageSize, expected) => {
-        expect(new WebPageResponse(totalCount, pageSize, []).totalPage).toBe(expected);
+        expect(new PageBody(totalCount, pageSize, []).totalPage).toBe(expected);
     })
-
 })
+```
+
+```javascript
+it("paging + ilike ", async () => {
+    const now = new Date();
+    const targetTitle = 'Test';
+    const article = Article.create(now, targetTitle, '테스트데이터', null);
+    await articleRepository.save(article);
+
+    //when
+    const result = await articleQueryRepository.paging(ArticleSearchRequest.create(now, 'test', 1, 10));
+    const entities = result[0];
+    const count = result[1];
+    //then
+    expect(entities).toHaveLength(1);
+    expect(entities[0].title).toBe(targetTitle);
+    expect(count).toBe(1);
+});
 ```
 
 ## 마무리
