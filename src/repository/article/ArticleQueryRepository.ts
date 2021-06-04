@@ -1,5 +1,5 @@
-import {Article} from "../../entity/article/Article";
-import {createQueryBuilder, EntityRepository} from "typeorm";
+import { Article } from "../../entity/article/Article";
+import { createQueryBuilder, EntityRepository } from "typeorm";
 import { ArticleSearchDto } from "./dto/ArticleSearchDto";
 import { ArticleSearchRequest } from "../../controller/article/dto/ArticleSearchRequest";
 
@@ -63,12 +63,15 @@ export class ArticleQueryRepository {
 
     paging(param: ArticleSearchRequest){
         const queryBuilder = createQueryBuilder()
-            .select("article") // select 는 Entity 대신에 Dto
-            .from(Article, "article");
+            .select([
+                "article.reservationDate",
+                "article.title",
+                "article.content"
+            ])
+            .from(Article, "article")
+            .limit(param.getLimit())
+            .offset(param.getOffset());
 
-        /**
-         * 동적쿼리
-         */
         if(param.hasReservationDate()) {
             queryBuilder.andWhere("article.reservationDate >= :reservationDate", {reservationDate: param.reservationDate})
         }
@@ -77,9 +80,6 @@ export class ArticleQueryRepository {
             queryBuilder.andWhere("article.title ilike :title", {title: `%${param.title}%`});
         }
 
-        return queryBuilder
-            .limit(param.getLimit())
-            .offset(param.getOffset())
-            .getManyAndCount()
+        return queryBuilder.getManyAndCount();
     }
 }

@@ -1,6 +1,6 @@
-import { WebPageRequest } from "../../WebPageRequest";
+import { PageRequest } from "../../PageRequest";
 
-export class ArticleSearchRequest extends WebPageRequest{
+export class ArticleSearchRequest extends PageRequest{
     reservationDate: Date | null;
     title: string | null;
 

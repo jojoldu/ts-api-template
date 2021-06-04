@@ -7,6 +7,7 @@ import { Article } from "../../entity/article/Article";
 import logger from "../../config/logger";
 import { ArticleSearchRequest } from "../../controller/article/dto/ArticleSearchRequest";
 import { PageBody } from "../PageBody";
+import { ArticleSearchItem } from "./dto/ArticleSearchItem";
 
 @Service()
 export class ArticleService {
@@ -18,9 +19,9 @@ export class ArticleService {
         return await this.articleQueryRepository.findAll();
     }
 
-    async findByTitle(param: ArticleSearchRequest){
+    async search(param: ArticleSearchRequest) : Promise<PageBody<ArticleSearchItem>>{
         const result = await this.articleQueryRepository.paging(param);
-        return new PageBody(result[1], param.pageSize, result[0]);
+        return new PageBody<ArticleSearchItem>(result[1], param.pageSize, result[0].map(e => new ArticleSearchItem(e)));
     }
 
     @Transaction()

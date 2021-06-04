@@ -4,7 +4,7 @@
 
 
 ```javascript
-export abstract class WebPageRequest {
+export abstract class PageRequest {
     pageNo: number| 1;
     pageSize: number| 10;
 

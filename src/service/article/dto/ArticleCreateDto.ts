@@ -1,5 +1,6 @@
 import { Article } from "../../../entity/article/Article";
 import { MinLength } from "class-validator";
+import { User } from "../../../entity/user/User";
 
 export class ArticleCreateDto {
     reservationDate: Date;
@@ -20,12 +21,12 @@ export class ArticleCreateDto {
         return dto;
     }
 
-    public toEntity(): Article {
+    public toEntity(user: User | null): Article {
         return Article.create(
             this.reservationDate,
             this.title,
             this.content,
-            this.author
+            user
         )
     }
 }

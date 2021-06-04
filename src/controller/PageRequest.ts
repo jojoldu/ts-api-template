@@ -1,6 +1,6 @@
-export abstract class WebPageRequest {
+export abstract class PageRequest {
     pageNo: number| 1;
-    pageSize: number| 15;
+    pageSize: number| 10;
 
     getOffset(): number {
         return (this.pageNo-1) * this.pageSize;
