@@ -78,6 +78,26 @@ describe('Article 조회 테스트', () => {
         expect(entities[0].title).toBe(title);
         expect(count).toBe(1);
     });
+
+    it("pagingWithoutCount에서는 pageSize가 2개여도 +1 개가 되어 조회된다", async () => {
+        // given
+        const now = new Date();
+        const title = 'Test';
+        const content = '테스트데이터';
+
+        await articleRepository.save(Article.create(now, title, content, null));
+        await articleRepository.save(Article.create(now, title, content, null));
+        await articleRepository.save(Article.create(now, title, content, null));
+
+        const pageSize = 2;
+        const param = ArticleSearchRequest.create(now, 'test', 1, pageSize);
+
+        //when
+        const entities = await articleQueryRepository.pagingWithoutCount(param);
+
+        //then
+        expect(entities).toHaveLength(pageSize + 1);
+    });
 })
 
 

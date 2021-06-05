@@ -84,4 +84,28 @@ export class ArticleQueryRepository {
             .disableEscaping()
             .getManyAndCount();
     }
+
+    pagingWithoutCount(param: ArticleSearchRequest): Promise<Article[]>{
+        const queryBuilder = createQueryBuilder()
+            .select([
+                "article.reservationDate",
+                "article.title",
+                "article.content"
+            ])
+            .from(Article, "article")
+            .limit(param.getLimit() + 1) // pageSize가 10개라면 11개를 조회한다.
+            .offset(param.getOffset());
+
+        if(param.hasReservationDate()) {
+            queryBuilder.andWhere("article.reservationDate >= :reservationDate", {reservationDate: param.reservationDate})
+        }
+
+        if(param.hasTitle()) {
+            queryBuilder.andWhere("article.title ilike :title", {title: `%${param.title}%`});
+        }
+
+        return queryBuilder
+            .disableEscaping()
+            .getMany(); // count는 사용하지 않는다.
+    }
 }
