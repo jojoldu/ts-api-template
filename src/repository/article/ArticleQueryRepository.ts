@@ -61,7 +61,7 @@ export class ArticleQueryRepository {
             .getRawOne();
     }
 
-    paging(param: ArticleSearchRequest){
+    paging(param: ArticleSearchRequest): Promise<[Article[], number]>{
         const queryBuilder = createQueryBuilder()
             .select([
                 "article.reservationDate",
@@ -80,6 +80,8 @@ export class ArticleQueryRepository {
             queryBuilder.andWhere("article.title ilike :title", {title: `%${param.title}%`});
         }
 
-        return queryBuilder.getManyAndCount();
+        return queryBuilder
+            .disableEscaping()
+            .getManyAndCount();
     }
 }

@@ -1,6 +1,6 @@
-import {PageBody} from "../../../src/service/PageBody";
+import {Page} from "../../../src/service/Page";
 
-describe('WebPageResponse', () => {
+describe('Page', () => {
     it.each([
         [10, 10, 1],
         [11, 10, 2],
@@ -8,6 +8,6 @@ describe('WebPageResponse', () => {
         [9, 10, 1],
         [0, 10, 0],
     ])('totalCount=%i, pageSize=%i 이면 totalPage=%i', (totalCount, pageSize, expected) => {
-        expect(new PageBody(totalCount, pageSize, []).totalPage).toBe(expected);
+        expect(new Page(totalCount, pageSize, []).totalPage).toBe(expected);
     })
 })

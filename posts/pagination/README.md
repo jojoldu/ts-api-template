@@ -1,7 +1,9 @@
-# TypeORM에서 페이징 사용하기
+# TypeORM에서 페이징 API 만들기
 
 
 
+> 전체 코드는 [Github](https://github.com/jojoldu/ts-api-template)에 있습니다.
+> 
 
 ```javascript
 export abstract class PageRequest {
@@ -16,11 +18,10 @@ export abstract class PageRequest {
         return this.pageSize;
     }
 }
-
 ```
 
 ```javascript
-export class PageBody<T> {
+export class Page<T> {
     pageSize: number;
     totalCount: number;
     totalPage: number;
@@ -39,11 +40,13 @@ export class PageBody<T> {
 paging(param: ArticleSearchRequest){
     const queryBuilder = createQueryBuilder()
         .select("article") // select 는 Entity 대신에 Dto
-        .from(Article, "article");
+        .from(Article, "article")
+        .limit(param.getLimit())
+        .offset(param.getOffset())
 
     /**
-        * 동적쿼리
-        */
+    * 동적쿼리
+    */
     if(param.hasReservationDate()) {
         queryBuilder.andWhere("article.reservationDate >= :reservationDate", {reservationDate: param.reservationDate})
     }
@@ -52,10 +55,7 @@ paging(param: ArticleSearchRequest){
         queryBuilder.andWhere("article.title ilike :title", {title: `%${param.title}%`});
     }
 
-    return queryBuilder
-        .limit(param.getLimit())
-        .offset(param.getOffset())
-        .getManyAndCount()
+    return queryBuilder.getManyAndCount()
 }
 ```
 
@@ -70,7 +70,7 @@ describe('WebPageResponse', () => {
         [9, 10, 1],
         [0, 10, 0],
     ])('totalCount=%i, pageSize=%i 이면 totalPage=%i', (totalCount, pageSize, expected) => {
-        expect(new PageBody(totalCount, pageSize, []).totalPage).toBe(expected);
+        expect(new Page(totalCount, pageSize, []).totalPage).toBe(expected);
     })
 })
 ```

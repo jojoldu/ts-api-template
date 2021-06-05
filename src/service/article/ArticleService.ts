@@ -6,7 +6,7 @@ import {EntityManager, Transaction, TransactionManager} from "typeorm";
 import { Article } from "../../entity/article/Article";
 import logger from "../../config/logger";
 import { ArticleSearchRequest } from "../../controller/article/dto/ArticleSearchRequest";
-import { PageBody } from "../PageBody";
+import { Page } from "../Page";
 import { ArticleSearchItem } from "./dto/ArticleSearchItem";
 
 @Service()
@@ -19,9 +19,9 @@ export class ArticleService {
         return await this.articleQueryRepository.findAll();
     }
 
-    async search(param: ArticleSearchRequest) : Promise<PageBody<ArticleSearchItem>>{
+    async search(param: ArticleSearchRequest) : Promise<Page<ArticleSearchItem>>{
         const result = await this.articleQueryRepository.paging(param);
-        return new PageBody<ArticleSearchItem>(result[1], param.pageSize, result[0].map(e => new ArticleSearchItem(e)));
+        return new Page<ArticleSearchItem>(result[1], param.pageSize, result[0].map(e => new ArticleSearchItem(e)));
     }
 
     @Transaction()

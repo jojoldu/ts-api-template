@@ -1,4 +1,4 @@
-export class PageBody<T> {
+export class Page<T> {
     pageSize: number;
     totalCount: number;
     totalPage: number;
@@ -12,6 +12,6 @@ export class PageBody<T> {
     }
 
     static createByManyAndCount(manyAndCount, pageSize) {
-        return new PageBody(manyAndCount.get(1), pageSize, manyAndCount.get(0));
+        return new Page(manyAndCount.get(1), pageSize, manyAndCount.get(0));
     }
 }
