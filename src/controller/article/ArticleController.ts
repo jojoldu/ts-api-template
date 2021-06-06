@@ -52,7 +52,7 @@ export class ArticleController {
             return await this.articleService.create(createDto, null);
         }catch (e) {
             logger.error('에러 발생', e);
-            return null;
+            return e.message;
         }
     }
 
