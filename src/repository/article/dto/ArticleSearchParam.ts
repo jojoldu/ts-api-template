@@ -1,5 +1,5 @@
 // dto는 모두 private으로 막는다
-export class ArticleSearchDto {
+export class ArticleSearchParam {
     private readonly _title: string;
     private readonly _content: string;
     private readonly _author: string;

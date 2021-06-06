@@ -1,7 +1,7 @@
 import {Service} from "typedi";
 import {InjectRepository} from "typeorm-typedi-extensions";
 import {ArticleQueryRepository} from "../../repository/article/ArticleQueryRepository";
-import {ArticleCreateDto} from "./dto/ArticleCreateDto";
+import {ArticleCreateParam} from "./dto/ArticleCreateParam";
 import {EntityManager, Transaction, TransactionManager} from "typeorm";
 import logger from "../../config/logger";
 
@@ -13,7 +13,7 @@ export class ArticleTransactionService {
 
     @Transaction()
     async createTransaction(
-        articleCreateDto: ArticleCreateDto,
+        articleCreateDto: ArticleCreateParam,
         isError: boolean,
         @TransactionManager() manager?: EntityManager
     ): Promise<Number> {

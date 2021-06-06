@@ -2,7 +2,7 @@ import { Article } from "../../../entity/article/Article";
 import { MinLength } from "class-validator";
 import { User } from "../../../entity/user/User";
 
-export class ArticleCreateDto {
+export class ArticleCreateParam {
     reservationDate: Date;
     @MinLength(1, { message: 'Title is too short', })
     title: string;
@@ -13,7 +13,7 @@ export class ArticleCreateDto {
     }
 
     static create(reservationDate: Date, title: string, content: string, author: string) {
-        let dto = new ArticleCreateDto();
+        let dto = new ArticleCreateParam();
         dto.reservationDate = reservationDate;
         dto.title = title;
         dto.content = content;

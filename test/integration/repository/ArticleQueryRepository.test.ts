@@ -3,7 +3,7 @@ import testConnection from "../testConnection";
 import { Article } from "../../../src/entity/article/Article";
 import { ArticleRepository } from "../../../src/entity/article/ArticleRepository";
 import { ArticleQueryRepository } from "../../../src/repository/article/ArticleQueryRepository";
-import { ArticleSearchDto } from "../../../src/repository/article/dto/ArticleSearchDto";
+import { ArticleSearchParam } from "../../../src/repository/article/dto/ArticleSearchParam";
 import { UserRepository } from "../../../src/entity/user/UserRepository";
 import { User } from "../../../src/entity/user/User";
 import { ArticleSearchRequest } from "../../../src/controller/article/dto/ArticleSearchRequest";
@@ -31,7 +31,7 @@ describe('Article 조회 테스트', () => {
         await articleRepository.save(article);
         await articleRepository.save(Article.create(now, '', '테스트데이터', null));
 
-        const dto = new ArticleSearchDto(targetTitle, null, null, null);
+        const dto = new ArticleSearchParam(targetTitle, null, null, null);
 
         // when
         const articlesAndCount = await articleQueryRepository.dynamicQueryByDto(dto);

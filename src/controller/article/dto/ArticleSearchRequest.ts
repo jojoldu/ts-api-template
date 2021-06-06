@@ -1,6 +1,6 @@
 import { PageRequest } from "../../PageRequest";
 
-export class ArticleSearchRequest extends PageRequest{
+export class ArticleSearchRequest extends PageRequest {
     reservationDate: Date | null;
     title: string | null;
 

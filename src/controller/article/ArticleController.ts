@@ -1,30 +1,51 @@
 import {ArticleService} from "../../service/article/ArticleService";
-import { Body, Get, HttpCode, JsonController, Param, Post, Res } from "routing-controllers";
+import { Body, Get, HttpCode, JsonController, Param, Post, Req, Res } from "routing-controllers";
 import {Response} from "express";
-import {ArticleCreateDto} from "../../service/article/dto/ArticleCreateDto";
+import {ArticleCreateParam} from "../../service/article/dto/ArticleCreateParam";
 import logger from "../../config/logger";
+import { ArticleSearchRequest } from "./dto/ArticleSearchRequest";
 
 @JsonController("/article")
 export class ArticleController {
     constructor(private articleService: ArticleService) {}
 
     @HttpCode(200)
+    @Get('/search')
+    public async search(@Req() param: ArticleSearchRequest, @Res() res: Response) {
+        try{
+            return await this.articleService.search(param);
+        }catch (e) {
+            logger.error('에러 발생', e);
+            return e.message;
+        }
+    }
+
+    @HttpCode(200)
+    @Get('/search-more')
+    public async searchMore(@Req() param: ArticleSearchRequest, @Res() res: Response) {
+        try{
+            return await this.articleService.searchMore(param);
+        }catch (e) {
+            logger.error('에러 발생', e);
+            return e.message;
+        }
+    }
+
+    @HttpCode(200)
     @Get('/')
-    public async get(
-        @Res() res: Response,
-    ) {
+    public async get(@Res() res: Response) {
         try{
             return await this.articleService.findAll();
         }catch (e) {
             logger.error('에러 발생', e);
-            return null;
+            return e.message;
         }
     }
 
     @HttpCode(200)
     @Post('/')
     public async create(
-        @Body() createDto: ArticleCreateDto,
+        @Body() createDto: ArticleCreateParam,
         @Res() res: Response,
     ) {
         try{

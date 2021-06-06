@@ -2,7 +2,7 @@ import testConnection from "../../testConnection";
 import {Article} from "../../../../src/entity/article/Article";
 import {getCustomRepository} from "typeorm";
 import {ArticleTransactionService} from "../../../../src/service/article/ArticleTransactionService";
-import {ArticleCreateDto} from "../../../../src/service/article/dto/ArticleCreateDto";
+import {ArticleCreateParam} from "../../../../src/service/article/dto/ArticleCreateParam";
 import {ArticleRepository} from "../../../../src/entity/article/ArticleRepository";
 import {ArticleQueryRepository} from "../../../../src/repository/article/ArticleQueryRepository";
 
@@ -28,7 +28,7 @@ describe('ArticleService CRUD', () => {
 
         // when
         const id = await articleService.createTransaction(
-            ArticleCreateDto.create(now, targetTitle, '테스트데이터', 'jojoldu'),
+            ArticleCreateParam.create(now, targetTitle, '테스트데이터', 'jojoldu'),
             false,
             null);
 
@@ -46,7 +46,7 @@ describe('ArticleService CRUD', () => {
         // when
         try {
             await articleService.createTransaction(
-                ArticleCreateDto.create(now, targetTitle, '테스트데이터', 'jojoldu'),
+                ArticleCreateParam.create(now, targetTitle, '테스트데이터', 'jojoldu'),
                 true,
                 null)
         } catch (e) {}

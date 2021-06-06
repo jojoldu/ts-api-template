@@ -1,6 +1,6 @@
 import { Article } from "../../entity/article/Article";
 import { createQueryBuilder, EntityRepository } from "typeorm";
-import { ArticleSearchDto } from "./dto/ArticleSearchDto";
+import { ArticleSearchParam } from "./dto/ArticleSearchParam";
 import { ArticleSearchRequest } from "../../controller/article/dto/ArticleSearchRequest";
 
 /**
@@ -32,7 +32,7 @@ export class ArticleQueryRepository {
             .getOne();
     }
 
-    dynamicQueryByDto (dto: ArticleSearchDto) {
+    dynamicQueryByDto (dto: ArticleSearchParam) {
         const queryBuilder = createQueryBuilder()
             .select("article")
             .from(Article, "article")
