@@ -2,7 +2,7 @@
 
 
 > 전체 코드는 [Github](https://github.com/jojoldu/ts-api-template)에 있습니다.
-> 
+
 
 ```javascript
 export abstract class PageRequest {

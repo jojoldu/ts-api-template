@@ -93,7 +93,7 @@ export class ArticleQueryRepository {
                 "article.content"
             ])
             .from(Article, "article")
-            .limit(param.getLimit() + 1) // pageSize가 10개라면 11개를 조회한다.
+            .limit(param.getLimitWithNext()) // pageSize가 10개라면 11개를 조회한다.
             .offset(param.getOffset());
 
         if(param.hasReservationDate()) {

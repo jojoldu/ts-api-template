@@ -9,4 +9,8 @@ export abstract class PageRequest {
     getLimit(): number {
         return this.pageSize;
     }
+
+    getLimitWithNext(): number {
+        return this.pageSize + 1;
+    }
 }
