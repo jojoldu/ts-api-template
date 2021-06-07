@@ -22,7 +22,7 @@ Java 기반의 페이징 구현 코드는 많은데, Typescript 와 TypeORM 의 
 
 * Typescript
 * [TypeDI](https://www.npmjs.com/package/typedi)
-  * DI (Dependency Injection) 라이브러리
+  * [DI (Dependency Injection)](https://velog.io/@moongq/Dependency-Injection) 라이브러리
   * 아래 방식을 모두 지원
     * property based injection
     * constructor based injection
@@ -81,7 +81,13 @@ Query (조회)는 **Domain 보다는 기능에 밀접**하게 됩니다.
 
 ## 1. 기본 페이징 API 구성
 
-```javascript
+먼저 페이징 처리에 항상 사용될 Request Dto와 Response Body Dto를 생성합니다.  
+  
+### 1-1. 공통 코드
+
+**PageRequest.ts**
+
+```typescript
 export abstract class PageRequest {
     pageNo: number| 1;
     pageSize: number| 10;
@@ -96,49 +102,70 @@ export abstract class PageRequest {
 }
 ```
 
+* `getOffset`
+* `getLimit`
 
-```javascript
-export class PageBody<T> {
-    pageSize: number;
-    totalCount: number;
-    totalPage: number;
-    items: T[];
 
-    constructor(totalCount: number, pageSize: number, items: T[]) {
-        this.pageSize = pageSize;
-        this.totalCount = totalCount;
-        this.totalPage = Math.ceil(totalCount/pageSize);
-        this.items = items;
+**Page.ts**
+
+```typescript
+export class Page<T> {
+  pageSize: number;
+  totalCount: number;
+  totalPage: number;
+  items: T[];
+
+  constructor(totalCount: number, pageSize: number, items: T[]) {
+    this.pageSize = pageSize;
+    this.totalCount = totalCount;
+    this.totalPage = Math.ceil(totalCount/pageSize);
+    this.items = items;
+  }
+
+  static createByManyAndCount(manyAndCount, pageSize) {
+    return new Page(manyAndCount.get(1), pageSize, manyAndCount.get(0));
+  }
+}
+```
+
+* `createByManyAndCount`
+
+
+### 1-2. 페이징 코드
+
+```typescript
+@EntityRepository(Article)
+export class ArticleQueryRepository {
+    ...
+    paging(param: ArticleSearchRequest): Promise<[Article[], number]>{
+        const queryBuilder = createQueryBuilder()
+            .select([
+                "article.reservationDate",
+                "article.title",
+                "article.content"
+            ]) // Lazy Loading이 필요없다면 필요한 컬럼만
+            .from(Article, "article")
+            .limit(param.getLimit())
+            .offset(param.getOffset());
+
+        if(param.hasReservationDate()) {
+            queryBuilder.andWhere("article.reservationDate >= :reservationDate", {reservationDate: param.reservationDate})
+        }
+
+        if(param.hasTitle()) {
+            queryBuilder.andWhere("article.title ilike :title", {title: `%${param.title}%`});
+        }
+
+        return queryBuilder
+            .disableEscaping()
+            .getManyAndCount();
     }
 }
 ```
 
-```javascript
-paging(param: ArticleSearchRequest){
-    const queryBuilder = createQueryBuilder()
-        .select("article") // select 는 Entity 대신에 Dto
-        .from(Article, "article")
-        .limit(param.getLimit())
-        .offset(param.getOffset())
+### 1-3. 테스트 코드
 
-    /**
-    * 동적쿼리
-    */
-    if(param.hasReservationDate()) {
-        queryBuilder.andWhere("article.reservationDate >= :reservationDate", {reservationDate: param.reservationDate})
-    }
-
-    if(param.hasTitle()) {
-        queryBuilder.andWhere("article.title ilike :title", {title: `%${param.title}%`});
-    }
-
-    return queryBuilder.getManyAndCount()
-}
-```
-
-## 테스트
-
-```javascript
+```typescript
 describe('WebPageResponse', () => {
     it.each([
         [10, 10, 1],
@@ -152,7 +179,7 @@ describe('WebPageResponse', () => {
 })
 ```
 
-```javascript
+```typescript
 it("paging + ilike ", async () => {
     const now = new Date();
     const targetTitle = 'Test';
@@ -170,7 +197,34 @@ it("paging + ilike ", async () => {
 });
 ```
 
-## Paging Without Count
+## 2. Paging Without Count
+
+
+### 2-1. 페이징 코드
+
+### 2-2. 테스트 코드
+
+```typescript
+    it("pagingWithoutCount에서는 pageSize가 2개여도 +1 개가 되어 조회된다", async () => {
+        // given
+        const now = new Date();
+        const title = 'Test';
+        const content = '테스트데이터';
+
+        await articleRepository.save(Article.create(now, title, content, null));
+        await articleRepository.save(Article.create(now, title, content, null));
+        await articleRepository.save(Article.create(now, title, content, null));
+
+        const pageSize = 2;
+        const param = ArticleSearchRequest.create(now, 'test', 1, pageSize);
+
+        //when
+        const entities = await articleQueryRepository.pagingWithoutCount(param);
+
+        //then
+        expect(entities).toHaveLength(pageSize + 1);
+    });
+```
 
 
 이렇게 API 인터페이스를 구현하면 이후엔 [더보기 방식](https://jojoldu.tistory.com/528) (```No Offset / Without Offset```) 으로 구성하기가 편해집니다.  
