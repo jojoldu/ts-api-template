@@ -33,6 +33,7 @@ Java 기반의 페이징 구현 코드는 많은데, Typescript 와 TypeORM 의 
   * Rest API 용
   * 현재 **TypeDI를 지원하는 유일한** 패키지라서 선택
 * Jest
+  * 테스트 프레임워크
 
 프로젝트 구조는 다음과 같습니다.
 
@@ -103,6 +104,8 @@ export abstract class PageRequest {
 ```
 
 * `getOffset`
+  * Client에서는 pageNo와 pageSize로 값을 주지만, 백엔드 쿼리에서는 `offset`, `limit` 가 필요합니다.
+  * 그래서 pageNo와 pageSize를 계산해서 `offset`으로 전환해주는 메소드를 함께 관리합니다.
 * `getLimit`
 
 

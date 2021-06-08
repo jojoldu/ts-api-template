@@ -1,5 +1,5 @@
 import {ArticleService} from "../../service/article/ArticleService";
-import { Body, Get, HttpCode, JsonController, Param, Post, Req, Res } from "routing-controllers";
+import { Body, Get, HttpCode, JsonController, Param, Post, QueryParams, Req, Res } from "routing-controllers";
 import {Response} from "express";
 import {ArticleCreateParam} from "../../service/article/dto/ArticleCreateParam";
 import logger from "../../config/logger";
@@ -11,7 +11,7 @@ export class ArticleController {
 
     @HttpCode(200)
     @Get('/search')
-    public async search(@Req() param: ArticleSearchRequest, @Res() res: Response) {
+    public async search(@QueryParams() param: ArticleSearchRequest, @Res() res: Response) {
         try{
             return await this.articleService.search(param);
         }catch (e) {
@@ -22,7 +22,7 @@ export class ArticleController {
 
     @HttpCode(200)
     @Get('/search-more')
-    public async searchMore(@Req() param: ArticleSearchRequest, @Res() res: Response) {
+    public async searchMore(@QueryParams() param: ArticleSearchRequest, @Res() res: Response) {
         try{
             return await this.articleService.searchMore(param);
         }catch (e) {

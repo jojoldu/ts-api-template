@@ -3,6 +3,7 @@ import { App } from "../../../../src/app";
 import { getCustomRepository } from "typeorm";
 import { ArticleRepository } from "../../../../src/entity/article/ArticleRepository";
 import { Article } from "../../../../src/entity/article/Article";
+import dayjs = require("dayjs");
 
 const request = require('supertest');
 
@@ -22,7 +23,7 @@ describe('ArticleController HTTP Request', () => {
     it("paging 조회", async () => {
         // given
         const title = 'title';
-        const date = new Date();
+        const date = dayjs('2021-06-05').toDate();
         articleRepository.save(Article.create(date, title, 'content', null));
         articleRepository.save(Article.create(date, title, 'content', null));
         articleRepository.save(Article.create(date, title, 'content', null));
@@ -34,9 +35,11 @@ describe('ArticleController HTTP Request', () => {
             .send();
 
         // then
+        const items = res.body.items;
         expect(res.status).toBe(200);
-        expect(res.body).toHaveLength(1);
-        expect(res.body[0].title).toBe(title);
+        expect(items).toHaveLength(1);
+        expect(items.totalCount).toBe(3);
+        expect(items[0].title).toBe(title);
     });
 
     it('get 호출시 전체 Article을 가져온다', async () => {
