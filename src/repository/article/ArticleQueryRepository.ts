@@ -64,6 +64,7 @@ export class ArticleQueryRepository {
     paging(param: ArticleSearchRequest): Promise<[Article[], number]>{
         const queryBuilder = createQueryBuilder()
             .select([
+                "article.id",
                 "article.reservationDate",
                 "article.title",
                 "article.content"

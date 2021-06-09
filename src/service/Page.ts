@@ -10,8 +10,4 @@ export class Page<T> {
         this.totalPage = Math.ceil(totalCount/pageSize);
         this.items = items;
     }
-
-    static createByManyAndCount(manyAndCount, pageSize) {
-        return new Page(manyAndCount.get(1), pageSize, manyAndCount.get(0));
-    }
 }
