@@ -124,10 +124,6 @@ export class Page<T> {
     this.totalPage = Math.ceil(totalCount/pageSize);
     this.items = items;
   }
-
-  static createByManyAndCount(manyAndCount, pageSize) {
-    return new Page(manyAndCount.get(1), pageSize, manyAndCount.get(0));
-  }
 }
 ```
 
@@ -135,6 +131,8 @@ export class Page<T> {
 
 
 ### 1-2. 페이징 코드
+
+**ArticleQueryRepository.ts**
 
 ```typescript
 @EntityRepository(Article)
@@ -166,10 +164,11 @@ export class ArticleQueryRepository {
 }
 ```
 
+**
 ### 1-3. 테스트 코드
 
 ```typescript
-describe('WebPageResponse', () => {
+describe('Page', () => {
     it.each([
         [10, 10, 1],
         [11, 10, 2],
@@ -177,7 +176,7 @@ describe('WebPageResponse', () => {
         [9, 10, 1],
         [0, 10, 0],
     ])('totalCount=%i, pageSize=%i 이면 totalPage=%i', (totalCount, pageSize, expected) => {
-        expect(new PageBody(totalCount, pageSize, []).totalPage).toBe(expected);
+        expect(new Page(totalCount, pageSize, []).totalPage).toBe(expected);
     })
 })
 ```
