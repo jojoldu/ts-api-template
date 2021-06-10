@@ -89,6 +89,7 @@ export class ArticleQueryRepository {
     pagingWithoutCount(param: ArticleSearchRequest): Promise<Article[]>{
         const queryBuilder = createQueryBuilder()
             .select([
+                "article.id",
                 "article.reservationDate",
                 "article.title",
                 "article.content"

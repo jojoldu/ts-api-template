@@ -3,7 +3,7 @@ import {BaseTimeEntity} from "../BaseTimeEntity";
 import { User } from "../user/User";
 
 @Entity()
-@Index("idx_users_1", ["title", "reservationDate"])
+@Index("idx_article_1", ["title", "reservationDate"])
 export class Article extends BaseTimeEntity{
 
     @Column({type:"timestamptz", nullable: true})
@@ -48,5 +48,4 @@ export class Article extends BaseTimeEntity{
         this.title = title;
         this.content = content;
     }
-
 }
