@@ -47,7 +47,7 @@
     "start": "NODE_ENV=local PINPOINT_AGENT_ID=${HOSTNAME} nodemon",
     "local": "NODE_ENV=local PINPOINT_AGENT_ID=local nodemon",
     "test": "jest",
-    "test:integration": "jest -c=jest.config.integration.js",
+    "test:unit": "jest -c=jest.config.unit.js",
     "generate-ddl": "typeorm migration:generate -n ddl.sql"
   }
 }
