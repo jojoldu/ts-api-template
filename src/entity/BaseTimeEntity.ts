@@ -1,10 +1,10 @@
-import {Column, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
+import { Column, CreateDateColumn, Generated, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { BigintValueTransformer } from "./BigintValueTransformer";
 
 export abstract class BaseTimeEntity {
 
-    @PrimaryGeneratedColumn({type: 'bigint'})
-    @Column({transformer: new BigintValueTransformer()})
+    @Generated("increment")
+    @PrimaryColumn({type: 'bigint', transformer: new BigintValueTransformer()})
     id: bigint;
 
     @CreateDateColumn({type:"timestamptz"})
