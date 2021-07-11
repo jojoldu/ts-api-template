@@ -1,9 +1,11 @@
 import {Column, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
+import { BigintValueTransformer } from "./BigintValueTransformer";
 
 export abstract class BaseTimeEntity {
 
     @PrimaryGeneratedColumn({type: 'bigint'})
-    id: number;
+    @Column({transformer: new BigintValueTransformer()})
+    id: bigint;
 
     @CreateDateColumn({type:"timestamptz"})
     createdAt: Date;
