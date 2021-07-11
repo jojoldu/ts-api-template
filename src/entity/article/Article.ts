@@ -21,7 +21,7 @@ export class Article extends BaseTimeEntity{
     @Column()
     isPublished: boolean;
 
-    @ManyToOne(type => User, user => user.articles, {onDelete:'CASCADE'})
+    @ManyToOne(type => User, user => user.articles, {onDelete:'CASCADE', createForeignKeyConstraints: false})
     user: User;
 
     constructor() {

@@ -20,8 +20,7 @@ const testConnection = {
     async deleteAll(entityName: string) {
         const connection = getConnection();
         const repository = connection.getRepository(entityName);
-        const items = await repository.find();
-        return repository.remove(items);
+        return repository.clear();
     },
 
 };
