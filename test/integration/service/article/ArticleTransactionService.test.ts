@@ -60,7 +60,7 @@ describe('ArticleService CRUD', () => {
         // given
         const now = new Date();
         const targetTitle = '테스트';
-        const article = await articleRepository.save(Article.create(now, targetTitle, '테스트데이터', 'jojoldu'));
+        const article = await articleRepository.save(Article.create(now, targetTitle, '테스트데이터', null));
         const id = article.id;
 
         // when
@@ -76,7 +76,7 @@ describe('ArticleService CRUD', () => {
         // given
         const now = new Date();
         const targetTitle = '테스트';
-        const article = await articleRepository.save(Article.create(now, targetTitle, '테스트데이터', 'jojoldu'));
+        const article = await articleRepository.save(Article.create(now, targetTitle, '테스트데이터', null));
         const id = article.id;
 
         // when
