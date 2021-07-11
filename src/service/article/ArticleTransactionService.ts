@@ -16,9 +16,9 @@ export class ArticleTransactionService {
         articleCreateDto: ArticleCreateParam,
         isError: boolean,
         @TransactionManager() manager?: EntityManager
-    ): Promise<Number> {
+    ): Promise<bigint> {
         logger.info(JSON.stringify(articleCreateDto));
-        const article = await manager.save(articleCreateDto.toEntity());
+        const article = await manager.save(articleCreateDto.toEntity(null));
         if(isError) {
             throw new Error('Exception으로 인해 롤백된다');
         }
@@ -27,7 +27,7 @@ export class ArticleTransactionService {
 
     @Transaction()
     async publishTransaction(
-        id: number,
+        id: bigint,
         isError: boolean,
         @TransactionManager() manager?: EntityManager
     ): Promise<void> {
