@@ -4,6 +4,7 @@ import {Response} from "express";
 import {ArticleCreateParam} from "../../service/article/dto/ArticleCreateParam";
 import logger from "../../config/logger";
 import { ArticleSearchRequest } from "./dto/ArticleSearchRequest";
+import { Article } from "../../entity/article/Article";
 
 @JsonController("/article")
 export class ArticleController {

@@ -23,18 +23,6 @@ describe('Article 조회 테스트', () => {
         await testConnection.clear();
     });
 
-    it("bigint 타입 테스트", async () => {
-        const now = new Date();
-        const targetTitle = '테스트';
-        const noEntity = Article.create(now, targetTitle, '테스트데이터', null);
-        const entity = await articleRepository.save(noEntity);
-        const select = await articleRepository.findOne({title:targetTitle});
-
-        expect(noEntity.id + BigInt(1)).toBeGreaterThanOrEqual(1n);
-        expect(entity.id + BigInt(1)).toBeGreaterThanOrEqual(1n);
-        expect(select.id + BigInt(1)).toBeGreaterThanOrEqual(1n);
-    });
-
     it('동적 쿼리 테스트', async () => {
         // given
         const now = new Date();
