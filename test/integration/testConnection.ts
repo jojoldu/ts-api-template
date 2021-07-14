@@ -3,7 +3,10 @@ import { createDatabaseConnection } from "../../src/config/database";
 
 const testConnection = {
     async create() {
-        await createDatabaseConnection();
+        const hasDefaultConnection = getConnectionManager().has("default");
+        if(!hasDefaultConnection) {
+            await createDatabaseConnection();
+        }
     },
 
     async close() {

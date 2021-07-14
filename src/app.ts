@@ -44,6 +44,7 @@ export class App {
             await createDatabaseConnection();
         } catch (error) {
             logger.error(error);
+            throw error;
         }
     }
 
