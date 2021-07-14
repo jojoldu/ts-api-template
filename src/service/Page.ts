@@ -1,13 +1,11 @@
 export class Page<T> {
-    pageSize: number;
-    totalCount: number;
-    totalPage: number;
-    items: T[];
+    constructor(
+        public readonly totalCount: number,
+        public readonly pageSize: number,
+        public readonly items: T[],
+    ) {}
 
-    constructor(totalCount: number, pageSize: number, items: T[]) {
-        this.pageSize = pageSize;
-        this.totalCount = totalCount;
-        this.totalPage = Math.ceil(totalCount/pageSize);
-        this.items = items;
+    get totalPage(): number {
+        return Math.ceil(this.totalCount / this.pageSize);
     }
 }
