@@ -20,6 +20,7 @@
     "supertest": "^6.1.3",
     "ts-jest": "^26.5.5",
     "ts-node": "9.1.1",
+    "ts-node-dev": "^1.1.8",
     "typescript": "4.2.4"
   },
   "dependencies": {
@@ -45,7 +46,7 @@
   },
   "scripts": {
     "start": "NODE_ENV=local PINPOINT_AGENT_ID=${HOSTNAME} nodemon",
-    "local": "NODE_ENV=local PINPOINT_AGENT_ID=local nodemon",
+    "local": "ts-node-dev --respawn --transpile-only src/index.ts PINPOINT_AGENT_ID=local",
     "test": "jest",
     "test:unit": "jest -c=jest.config.unit.js",
     "generate-ddl": "typeorm migration:generate -n ddl.sql"
