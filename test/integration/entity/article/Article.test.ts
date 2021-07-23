@@ -1,8 +1,8 @@
 import { getCustomRepository, getRepository } from "typeorm";
 import { Article } from "../../../../src/entity/article/Article";
-import testConnection from "../../testConnection";
 import { ArticleRepository } from "../../../../src/entity/article/ArticleRepository";
 import { ArticleQueryRepository } from "../../../../src/repository/article/ArticleQueryRepository";
+import { testConnection } from "../../../testConnection";
 
 describe("Article CRUD", () => {
 

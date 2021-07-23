@@ -1,4 +1,4 @@
-import testConnection from "./integration/testConnection";
+import { testConnection } from "./testConnection";
 
 process.env.NODE_ENV = "test";
 

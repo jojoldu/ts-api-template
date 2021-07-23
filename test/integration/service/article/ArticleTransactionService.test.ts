@@ -1,10 +1,10 @@
-import testConnection from "../../testConnection";
 import {Article} from "../../../../src/entity/article/Article";
 import {getCustomRepository} from "typeorm";
 import {ArticleTransactionService} from "../../../../src/service/article/ArticleTransactionService";
 import {ArticleCreateParam} from "../../../../src/service/article/dto/ArticleCreateParam";
 import {ArticleRepository} from "../../../../src/entity/article/ArticleRepository";
 import {ArticleQueryRepository} from "../../../../src/repository/article/ArticleQueryRepository";
+import { testConnection } from "../../../testConnection";
 
 describe('ArticleService CRUD', () => {
     let articleRepository: ArticleRepository;
