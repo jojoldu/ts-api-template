@@ -6,6 +6,14 @@ import { testConnection } from "../../../testConnection";
 
 describe("Article CRUD", () => {
 
+    beforeAll(async () => {
+        await testConnection.create();
+    });
+
+    afterAll(async () => {
+        await testConnection.close();
+    });
+
     afterEach(async () => {
         await testConnection.clear();
     });
@@ -66,11 +74,11 @@ describe("Article CRUD", () => {
 
         // when
         const noEntity = Article.create(now, targetTitle, "테스트데이터", null);
-        noEntity.id = 1n;
+        noEntity.id = 1;
 
         // then
-        expect(typeof noEntity.id).toBe("bigint");
-        expect(noEntity.id + BigInt(1)).toBeGreaterThanOrEqual(1n);
+        expect(typeof noEntity.id).toBe("number");
+        expect(noEntity.id).toBeGreaterThanOrEqual(1n);
     });
 
     it("Attach Entity의 id 타입은 number 으로 사용된다", async () => {
@@ -87,7 +95,7 @@ describe("Article CRUD", () => {
         expect(entity.id).toBeGreaterThanOrEqual(1);
     });
 
-    it("Select Entity의 id 타입은 bigint 으로 사용된다", async () => {
+    it("Select Entity의 id 타입은 number 으로 사용된다", async () => {
         // given
         const now = new Date();
         const targetTitle = "테스트";

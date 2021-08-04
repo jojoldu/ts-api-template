@@ -13,6 +13,14 @@ describe('Article 조회 테스트', () => {
     let articleQueryRepository: ArticleQueryRepository;
     let userRepository: UserRepository;
 
+    beforeAll(async () => {
+        await testConnection.create();
+    });
+
+    afterAll(async () => {
+        await testConnection.close();
+    });
+
     beforeEach(async () => {
         articleRepository = getCustomRepository(ArticleRepository);
         articleQueryRepository = getCustomRepository(ArticleQueryRepository);

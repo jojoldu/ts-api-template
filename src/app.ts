@@ -5,6 +5,7 @@ import { Container } from "typedi";
 import * as bodyParser from "body-parser";
 import logger from "./config/logger";
 import express = require("express");
+import { ArticleController } from "./controller/article/ArticleController";
 
 export class App {
     public app;
@@ -23,7 +24,7 @@ export class App {
             useExpressServer(this.app, {
                 routePrefix: "/api",
                 // cors: true,
-                controllers: [`${__dirname}/controller/**/*.ts`],
+                controllers: [ArticleController],
                 middlewares: [`${__dirname}/middleware/*.ts`]
             });
         } catch (error) {

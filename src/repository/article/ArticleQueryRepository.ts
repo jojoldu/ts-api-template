@@ -16,7 +16,7 @@ export class ArticleQueryRepository {
             .getMany();
     }
 
-    findOneById(id: bigint) {
+    findOneById(id: number) {
         return createQueryBuilder()
             .select("article")
             .from(Article, "article")
@@ -51,7 +51,7 @@ export class ArticleQueryRepository {
             .getManyAndCount();
     }
 
-    getTitleAndUserName(articleId: BigInt) {
+    getTitleAndUserName(articleId: number) {
         return createQueryBuilder()
             .select("article.title", "title")
             .addSelect("user.name", "userName")

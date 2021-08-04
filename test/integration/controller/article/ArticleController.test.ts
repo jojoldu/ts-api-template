@@ -4,6 +4,7 @@ import { getCustomRepository } from "typeorm";
 import { ArticleRepository } from "../../../../src/entity/article/ArticleRepository";
 import { Article } from "../../../../src/entity/article/Article";
 import dayjs = require("dayjs");
+import { testConnection } from "../../../testConnection";
 
 const request = require('supertest');
 
@@ -12,12 +13,18 @@ describe('ArticleController HTTP Request', () => {
     let articleRepository;
 
     beforeAll(async ()=>{
+        await testConnection.create();
         app = new App().app;
         articleRepository = getCustomRepository(ArticleRepository);
     });
 
     afterAll(async ()=>{
         app = null;
+        await testConnection.close();
+    });
+
+    afterEach(async () => {
+        await testConnection.clear();
     });
 
     it("paging 조회", async () => {
@@ -68,7 +75,7 @@ describe('ArticleController HTTP Request', () => {
         // given
         const title = 'title';
         const article = Article.create(new Date(), title, 'content', null);
-        articleRepository.save(article);
+        await articleRepository.save(article);
 
         // when
         const res = await request(app)

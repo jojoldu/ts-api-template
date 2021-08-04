@@ -10,6 +10,13 @@ describe('ArticleService CRUD', () => {
     let articleRepository: ArticleRepository;
     let articleQueryRepository: ArticleQueryRepository;
     let articleService: ArticleTransactionService;
+    beforeAll(async () => {
+        await testConnection.create();
+    });
+
+    afterAll(async () => {
+        await testConnection.close();
+    });
 
     beforeEach(async () => {
         articleRepository = getCustomRepository(ArticleRepository);

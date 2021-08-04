@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import Container from "typedi";
-import { ConnectionOptions, createConnection, useContainer } from "typeorm";
+import { ConnectionOptions, createConnection, getConnectionManager, useContainer } from "typeorm";
 import { env } from "./env";
 import { ConstraintSnakeNamingStrategy } from "./ConstraintSnakeNamingStrategy";
 
@@ -32,6 +32,7 @@ export async function createDatabaseConnection(): Promise<void> {
         namingStrategy: new ConstraintSnakeNamingStrategy(),
     };
     useContainer(Container);
-    await createConnection(connectionOption);
-
+    if(!getConnectionManager().has("default")) {
+        await createConnection(connectionOption);
+    }
 }

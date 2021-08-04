@@ -16,7 +16,7 @@ export class ArticleTransactionService {
         articleCreateDto: ArticleCreateParam,
         isError: boolean,
         @TransactionManager() manager?: EntityManager
-    ): Promise<bigint> {
+    ): Promise<number> {
         logger.info(JSON.stringify(articleCreateDto));
         const article = await manager.save(articleCreateDto.toEntity(null));
         if(isError) {
@@ -27,7 +27,7 @@ export class ArticleTransactionService {
 
     @Transaction()
     async publishTransaction(
-        id: bigint,
+        id: number,
         isError: boolean,
         @TransactionManager() manager?: EntityManager
     ): Promise<void> {

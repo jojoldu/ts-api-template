@@ -20,8 +20,5 @@ module.exports = {
         '!src/**/exception/**',
     ],
     coverageDirectory: 'coverage',
-    testEnvironment: 'node',
-    setupFilesAfterEnv: [
-        "<rootDir>/test/setup.ts"
-    ],
+    testEnvironment: 'node'
 };

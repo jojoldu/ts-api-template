@@ -5,7 +5,7 @@ export abstract class BaseTimeEntity {
 
     @Generated("increment")
     @PrimaryColumn({type: 'bigint', transformer: new BigintValueTransformer()})
-    id: bigint;
+    id: number;
 
     @CreateDateColumn({type:"timestamptz"})
     createdAt: Date;
