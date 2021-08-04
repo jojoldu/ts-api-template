@@ -47,7 +47,7 @@
   "scripts": {
     "start": "NODE_ENV=local PINPOINT_AGENT_ID=${HOSTNAME} nodemon",
     "local": "ts-node-dev --respawn --transpile-only src/index.ts PINPOINT_AGENT_ID=local",
-    "test": "jest",
+    "test": "jest --runInBand",
     "test:unit": "jest -c=jest.config.unit.js",
     "generate-ddl": "typeorm migration:generate -n ddl.sql"
   }

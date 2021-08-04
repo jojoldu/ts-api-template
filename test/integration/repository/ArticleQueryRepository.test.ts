@@ -1,5 +1,5 @@
 import { getCustomRepository } from "typeorm";
-import testConnection from "../../testConnection";
+import { testConnection } from "../../testConnection";
 import { Article } from "../../../src/entity/article/Article";
 import { ArticleRepository } from "../../../src/entity/article/ArticleRepository";
 import { ArticleQueryRepository } from "../../../src/repository/article/ArticleQueryRepository";

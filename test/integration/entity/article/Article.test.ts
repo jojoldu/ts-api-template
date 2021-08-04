@@ -73,7 +73,7 @@ describe("Article CRUD", () => {
         expect(noEntity.id + BigInt(1)).toBeGreaterThanOrEqual(1n);
     });
 
-    it("Attach Entity의 id 타입은 bigint 으로 사용된다", async () => {
+    it("Attach Entity의 id 타입은 number 으로 사용된다", async () => {
         // given
         const now = new Date();
         const targetTitle = "테스트";
@@ -83,8 +83,8 @@ describe("Article CRUD", () => {
         const entity = await articleRepository.save(Article.create(now, targetTitle, "테스트데이터", null));
 
         // then
-        expect(typeof entity.id).toBe("bigint");
-        expect(entity.id + BigInt(1)).toBeGreaterThanOrEqual(1n);
+        expect(typeof entity.id).toBe("number");
+        expect(entity.id).toBeGreaterThanOrEqual(1);
     });
 
     it("Select Entity의 id 타입은 bigint 으로 사용된다", async () => {
@@ -98,8 +98,8 @@ describe("Article CRUD", () => {
         const select = await articleRepository.findOne({ title: targetTitle });
 
         // then
-        expect(typeof select.id).toBe("bigint");
-        expect(select.id + BigInt(1)).toBeGreaterThanOrEqual(1n);
+        expect(typeof select.id).toBe("number");
+        expect(select.id).toBeGreaterThanOrEqual(1);
     });
 });
 
